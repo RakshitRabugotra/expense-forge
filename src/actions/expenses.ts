@@ -34,12 +34,11 @@ export const recordExpense = async (formData: FormData) => {
     return null
   }
 
+  // Extract the information
   const name = formData.get('expense-name') as string
   const category = formData.get('expense-category') as string
   const date = formData.get('expense-date') as string
   const expenditure = parseInt(formData.get('expense-expenditure') as string)
-
-  console.log({ user_id: session.user.id, name, category, date, expenditure })
 
   return await supabase.from('expenses').insert([
     {

@@ -30,7 +30,6 @@ export default function ExpenseList({ user }: { user: User }) {
 
   useEffect(() => {
     getExpenses(user.id).then((response) => {
-      console.log(response)
       setExpenses(response.data)
     })
     if (refresh <= 0) return

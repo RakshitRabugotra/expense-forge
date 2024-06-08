@@ -41,14 +41,12 @@ export default function NavBar({ baseUrl }: { baseUrl: string }) {
   // Getting the path to get which link is active
   const pathname = usePathname()
 
-  console.log(pathname)
-
   return (
     <nav
       className={twMerge(
         'fixed bottom-0 left-0 right-0 z-10',
         'flex flex-row items-center justify-around',
-        'shadow-md backdrop-blur-sm',
+        'bg-white/95 shadow-md backdrop-blur-sm',
         'overflow-clip',
         '[&>*]:transition-all [&>*]:duration-300',
         '[&>*]:text-2xl [&>*]:text-foreground',
@@ -60,7 +58,6 @@ export default function NavBar({ baseUrl }: { baseUrl: string }) {
           {...navLink}
           baseUrl={baseUrl}
           pathname={pathname}
-          prefetch
           activeClass='[&>svg]:bg-leaf-300 [&>p]:text-leaf-300 [&>svg]:text-white'
         />
       ))}

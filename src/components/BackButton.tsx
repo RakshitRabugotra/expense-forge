@@ -7,10 +7,7 @@ export default function BackButton() {
 
   return (
     <a
-      onClick={() => {
-        router.replace('/')
-        console.log('clicked')
-      }}
+      onClick={() => router.replace('/')}
       className='group absolute left-8 top-8 flex items-center rounded-md bg-btn-background px-4 py-2 text-sm text-foreground no-underline hover:bg-btn-background-hover'
     >
       <svg

@@ -36,6 +36,16 @@
     -webkit-backdrop-filter: blur(1rem);
     backdrop-filter: blur(1rem);
   }
+
+  .dark-glass {
+    background: linear-gradient(
+      to right bottom,
+      rgb(0 0 0 / 70%),
+      rgb(0 0 0 / 80%)
+    );
+    -webkit-backdrop-filter: blur(3rem);
+    backdrop-filter: blur(3rem);
+  }
 }
 
 .animate-in {

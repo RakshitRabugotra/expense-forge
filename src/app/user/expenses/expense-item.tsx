@@ -21,10 +21,7 @@ export default function ExpenseItem({
 
   return (
     <div
-      onClick={(e) => {
-        console.log('clicked!')
-        if (onClick) onClick(e)
-      }}
+      onClick={onClick}
       className={twMerge(
         'inline-flex w-full items-center justify-between',
         'rounded-lg border',

@@ -15,6 +15,7 @@ import AddExpenseBtn from '@/components/Expenses/AddExpenseBtn'
 
 // Icon Dependencies
 import { RiMoneyDollarCircleFill } from 'react-icons/ri'
+import UpdateExpenseForm from '@/components/Expenses/UpdateExpenseForm'
 
 type Expense = Tables<'expenses'>
 
@@ -23,6 +24,9 @@ export default function ExpenseList({ user }: { user: User }) {
   const [expenses, setExpenses] = useState<Expense[] | null>(null)
   // The state variable which will trigger the refresh in fetching the expenses
   const [refresh, setRefresh] = useState<number>(0)
+
+  // The selected expense for the update process
+  const [selectedExpense, setSelected] = useState<Expense | null>(null)
 
   useEffect(() => {
     getExpenses(user.id).then((response) => {
@@ -46,12 +50,15 @@ export default function ExpenseList({ user }: { user: User }) {
               key={index}
               {...value}
               IconComponent={RiMoneyDollarCircleFill}
+              onClick={() => setSelected(value)}
             />
           )
         })}
       </div>
       {/* Add expense button */}
       <AddExpenseBtn setRefresh={setRefresh} />
+      {/* Update expense form */}
+      <UpdateExpenseForm setRefresh={setRefresh} expense={selectedExpense} />
     </>
   )
 }

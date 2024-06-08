@@ -8,7 +8,11 @@ export default function ExpenseItem({
   category,
   expenditure,
   IconComponent,
-}: Tables<'expenses'> & { IconComponent: IconType }) {
+  onClick,
+}: Tables<'expenses'> & {
+  IconComponent: IconType
+  onClick?: React.MouseEventHandler<HTMLDivElement>
+}) {
   // Extract the different components of the expenditure
   const formattedExp = currencyFormatter.format(expenditure)
   const currencySymbol = formattedExp.charAt(0)
@@ -17,6 +21,10 @@ export default function ExpenseItem({
 
   return (
     <div
+      onClick={(e) => {
+        console.log('clicked!')
+        if (onClick) onClick(e)
+      }}
       className={twMerge(
         'inline-flex w-full items-center justify-between',
         'rounded-lg border',
@@ -27,7 +35,7 @@ export default function ExpenseItem({
       <IconComponent className='w-[20%] rounded-lg p-2 text-5xl' />
 
       <div className='w-[60%]'>
-        {name && <h4 className='text-3xl'>{name}</h4>}
+        {name && <h4 className='text-2xl'>{name}</h4>}
         {category && (
           <div className='text-xs font-medium capitalize leading-6'>
             {category}
@@ -35,7 +43,7 @@ export default function ExpenseItem({
         )}
       </div>
 
-      <div className='flex w-[20%] items-center justify-center text-5xl'>
+      <div className='flex w-[20%] flex-col items-center justify-center text-5xl'>
         {expenditure && (
           <>
             <p className='text-base'>{currencySymbol}</p>

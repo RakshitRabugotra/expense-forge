@@ -1,19 +1,17 @@
-import { getSession } from '@/actions/auth'
+import { getSession, getUser } from '@/actions/auth'
 import AuthButton from '@/components/Auth/AuthButton'
 import PieChart from '@/components/Charts/PieChart'
 import Heading from '@/components/Heading'
 
 export default async function ProtectedPage() {
   const {
-    data: { session },
-  } = await getSession()
+    data: { user },
+  } = await getUser()
 
   // If not session, then there's something wrong
-  if (!session) return <div>Something went wrong</div>
+  if (!user) return <div>Something went wrong</div>
   // Extract the user from session
-  const {
-    user: { user_metadata },
-  } = session
+  const { user_metadata } = user
 
   return (
     <>

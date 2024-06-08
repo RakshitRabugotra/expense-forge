@@ -37,7 +37,7 @@ type Expense = Tables<'expenses'>
 export default function PieChart({ dailyTotal }: { dailyTotal: number }) {
   // State variables for the pie chart
   const [categorizedExp, setCategorizedExp] = useState<Map<
-    string,
+    string | number,
     Expense[]
   > | null>(null)
 

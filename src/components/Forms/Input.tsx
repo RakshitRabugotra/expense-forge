@@ -5,10 +5,10 @@ export default function Input({
   label,
   className,
   ...props
-}: ComponentProps<'input'> & { label: string }) {
+}: ComponentProps<'input'> & { label?: string }) {
   return (
     <label htmlFor={props.name}>
-      <span className='text-md'>{label}</span>
+      {label && <span className='text-md'>{label}</span>}
       <input
         {...props}
         required

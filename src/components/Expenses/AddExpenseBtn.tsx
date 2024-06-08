@@ -18,13 +18,13 @@ export default function AddExpenseBtn({
   setRefresh?: React.Dispatch<SetStateAction<number>>
 }) {
   const [springs, api] = useSpring(() => ({
-    from: { bottom: '-60vh' },
+    from: { bottom: '-100vh' },
   }))
 
   const openForm = () => {
     api.start({
       from: {
-        bottom: '-60vh',
+        bottom: '-100vh',
       },
       to: {
         bottom: '0vh',
@@ -37,7 +37,7 @@ export default function AddExpenseBtn({
         bottom: '0vh',
       },
       to: {
-        bottom: '-60vh',
+        bottom: '-100vh',
       },
     })
   }
@@ -60,7 +60,7 @@ export default function AddExpenseBtn({
         onClick={() => openForm()}
         className={twMerge(
           'animate-in shadow-md',
-          'fixed right-4 top-[80vh] z-10',
+          'fixed bottom-[15vh] right-4 z-10',
           'bg-leaf-200 rounded-full p-4',
         )}
       >

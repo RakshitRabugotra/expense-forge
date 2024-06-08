@@ -49,7 +49,7 @@ export default function NavBar({ baseUrl }: { baseUrl: string }) {
         'fixed bottom-0 left-0 right-0 z-10',
         'flex flex-row items-center justify-around',
         'shadow-md backdrop-blur-sm',
-        'overflow-clip rounded-full',
+        'overflow-clip',
         '[&>*]:transition-all [&>*]:duration-300',
         '[&>*]:text-2xl [&>*]:text-foreground',
       )}

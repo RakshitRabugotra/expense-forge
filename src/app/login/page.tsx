@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 import { SubmitButton } from './submit-button'
 import { signIn, signUp } from '@/actions/auth'
 import BackButton from '@/components/BackButton'
@@ -31,6 +29,7 @@ export default function Login({
           type='password'
           name='password'
           placeholder='••••••••'
+          autoComplete='current-password'
           required
         />
         <SubmitButton

@@ -10,14 +10,14 @@
     --foreground: #f9fafb;
   }
 
-  @media (prefers-color-scheme: dark) {
+  /* @media (prefers-color-scheme: dark) {
     :root {
       --background: #f9fafb;
       --btn-background: 200 10% 9%;
       --btn-background-hover: 200 10% 12%;
       --foreground: #252525;
     }
-  }
+  } */
 }
 
 @layer base {

@@ -1,8 +1,12 @@
 'use server'
 
 import { createClient } from '@/utils/supabase/server'
-import { getSession } from './auth'
+
+// Type definitions
 import { Tables } from '@/types/supabase'
+
+// Custom utilities
+import { groupBy } from '@/utils/functions'
 
 /* Server actions related to stats */
 
@@ -38,5 +42,5 @@ export const getCategorizedExpenses = async () => {
   }
 
   // Categorize the rows by their category
-  return Map.groupBy(rows.data as Tables<'expenses'>[], (item) => item.category)
+  return groupBy(rows.data as Tables<'expenses'>[], (item) => item.category)
 }

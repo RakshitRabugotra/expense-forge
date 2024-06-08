@@ -6,6 +6,35 @@ export function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
+/* Util function related to list operations */
+
+/**
+ * Function to group certain elements in an list by a key
+ * @param list
+ * @param keyGetter
+ * @returns A map with keyof T as key and T[] as value
+ */
+export function groupBy<T>(
+  list: Array<T>,
+  keyGetter: (item: T) => string | number,
+) {
+  // Create a new map
+  const map = new Map<string | number, T[]>()
+  // Iterate over the list and group the items
+  list.forEach((item) => {
+    const key = keyGetter(item)
+    const collection = map.get(key)
+    // If the item doesn't exist in the collection, make a new entry
+    // else push
+    if (!collection) {
+      map.set(key, [item])
+    } else {
+      collection.push(item)
+    }
+  })
+  return map
+}
+
 /**
  * Currency formatter for the app (en-IN)
  */

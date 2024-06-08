@@ -17,6 +17,7 @@ export default function LoginForm({
           label='Email'
           className='mb-6'
           name='email'
+          type='email'
           placeholder='you@example.com'
           required
         />

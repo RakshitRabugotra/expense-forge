@@ -8,9 +8,19 @@ export default async function ProtectedPage() {
     data: { session },
   } = await getSession()
 
+  // If not session, then there's something wrong
+  if (!session) return <div>Something went wrong</div>
+  // Extract the user from session
+  const {
+    user: { user_metadata },
+  } = session
+
   return (
     <>
-      <Heading text='Hello' coloredText={'!'} />
+      <Heading
+        text='Hello'
+        coloredText={(user_metadata?.firstName ?? '') + '!'}
+      />
       <PieChart dailyTotal={40} />
       <AuthButton />
     </>

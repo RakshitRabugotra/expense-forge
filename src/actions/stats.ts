@@ -21,7 +21,7 @@ export const getCategorizedExpenses = async () => {
 
   // If the session is null, then we can't perform the operation
   if (!session) {
-    alert('ERROR: Cannot fetch expenses for a null session')
+    console.error('ERROR: Cannot fetch expenses for a null session')
     return null
   }
 
@@ -33,7 +33,7 @@ export const getCategorizedExpenses = async () => {
 
   // If we didn't receive the rows, then show the error
   if (!rows.data) {
-    alert('ERROR: ' + rows.error.toString())
+    console.error('ERROR: ' + rows.error.toString())
     return
   }
 

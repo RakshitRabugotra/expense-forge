@@ -74,6 +74,8 @@ export const signUp = async (formData: FormData) => {
   const supabase = await createClient()
 
   const origin = headers().get('origin')
+  const firstName = formData.get('first-name') as string
+  const lastName = formData.get('last-name') as string
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
@@ -81,9 +83,12 @@ export const signUp = async (formData: FormData) => {
     email,
     password,
     options: {
+      data: { firstName, lastName },
       emailRedirectTo: `${origin}/auth/callback`,
     },
   })
+
+  console.log({ firstName, lastName, email, password, error })
 
   if (error) {
     return redirect('/login?message=Could not authenticate user')

@@ -30,7 +30,7 @@ export const recordExpense = async (formData: FormData) => {
 
   // If the session is null, then return and say we couldn't do it
   if (!session) {
-    alert('ERROR: Cannot Perform Insertion with null session')
+    console.error('ERROR: Cannot Perform Insertion with null session')
     return null
   }
 
@@ -68,7 +68,7 @@ export const updateExpense = async (formData: FormData, id: string) => {
 
   // If the session is null, then return and say we couldn't do it
   if (!session) {
-    alert('ERROR: Cannot perform update with null session')
+    console.error('ERROR: Cannot perform update with null session')
     return null
   }
 
@@ -104,7 +104,7 @@ export const deleteExpense = async (id: string) => {
 
   // If the session is null, then return and say we couldn't do it
   if (!session) {
-    alert('ERROR: Cannot perform delete with null session')
+    console.error('ERROR: Cannot perform delete with null session')
     return null
   }
 

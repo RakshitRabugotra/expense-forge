@@ -11,6 +11,7 @@ import { getExpenses } from '@/actions/expenses'
 
 // Internal Custom Components
 import ExpenseItem from './expense-item'
+import AddExpenseBtn from '@/components/Expenses/AddExpenseBtn'
 
 // Icon Dependencies
 import { RiMoneyDollarCircleFill } from 'react-icons/ri'
@@ -20,13 +21,16 @@ type Expense = Tables<'expenses'>
 export default function ExpenseList({ user }: { user: User }) {
   // The state variables for the component
   const [expenses, setExpenses] = useState<Expense[] | null>(null)
+  // The state variable which will trigger the refresh in fetching the expenses
+  const [refresh, setRefresh] = useState<number>(0)
 
   useEffect(() => {
     getExpenses(user.id).then((response) => {
       console.log(response)
       setExpenses(response.data)
     })
-  }, [user])
+    if (refresh <= 0) return
+  }, [user, refresh])
 
   // If the expenses haven't loaded yet, then show suspense
   if (!expenses) {
@@ -34,16 +38,20 @@ export default function ExpenseList({ user }: { user: User }) {
   }
 
   return (
-    <div className='auto-rows-[minmax(fit-content, auto)] grid w-full grid-cols-1 gap-6'>
-      {expenses?.map((value, index) => {
-        return (
-          <ExpenseItem
-            key={index}
-            {...value}
-            IconComponent={RiMoneyDollarCircleFill}
-          />
-        )
-      })}
-    </div>
+    <>
+      <div className='auto-rows-[minmax(fit-content, auto)] my-4 grid w-full grid-cols-1 gap-6'>
+        {expenses?.map((value, index) => {
+          return (
+            <ExpenseItem
+              key={index}
+              {...value}
+              IconComponent={RiMoneyDollarCircleFill}
+            />
+          )
+        })}
+      </div>
+      {/* Add expense button */}
+      <AddExpenseBtn setRefresh={setRefresh} />
+    </>
   )
 }

@@ -60,6 +60,7 @@ export default function NavBar({ baseUrl }: { baseUrl: string }) {
           {...navLink}
           baseUrl={baseUrl}
           pathname={pathname}
+          prefetch
           activeClass='[&>svg]:bg-leaf-300 [&>p]:text-leaf-300 [&>svg]:text-white'
         />
       ))}
@@ -76,12 +77,14 @@ function NavLink({
   className,
   activeClass,
   inactiveClass,
+  prefetch,
 }: NavLinkType & {
   baseUrl?: string
   pathname: string
   className?: string
   activeClass: string
   inactiveClass?: string
+  prefetch?: boolean
 }) {
   // Get the Url for the link, if some base is provided or not
   const url = useMemo(() => (baseUrl ? baseUrl + href : href), [baseUrl, href])
@@ -94,6 +97,7 @@ function NavLink({
   return (
     <Link
       href={url}
+      prefetch={prefetch}
       className={twMerge(
         'm-2 basis-[22%]',
         className,

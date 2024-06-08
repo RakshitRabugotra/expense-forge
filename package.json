@@ -6,9 +6,11 @@
     "start": "next start"
   },
   "dependencies": {
+    "@react-spring/web": "^9.7.3",
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
     "geist": "^1.2.1",
+    "moment": "^2.30.1",
     "next": "latest",
     "prettier-plugin-tailwindcss": "^0.6.1",
     "react": "18.2.0",

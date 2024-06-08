@@ -7,15 +7,22 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 import { PROTECTED_URL } from '@/utils/constants'
 
-// Create a supabase client
-const supabase = createClient()
+/**
+ * @returns The metadata of current session
+ */
+export const getSession = async () => {
+  'use server'
+  // Supabase client
+  const supabase = await createClient()
+  return await supabase.auth.getSession()
+}
 
 /**
  * @returns The metadata of current logged in user
  */
 export const getUser = async () => {
   'use server'
-
+  const supabase = await createClient()
   return await supabase.auth.getUser()
 }
 
@@ -25,7 +32,8 @@ export const getUser = async () => {
  */
 export const signOut = async () => {
   'use server'
-
+  // Supabase client
+  const supabase = await createClient()
   await supabase.auth.signOut()
   return redirect('/login')
 }
@@ -37,10 +45,11 @@ export const signOut = async () => {
  */
 export const signIn = async (formData: FormData) => {
   'use server'
+  // Supabase client
+  const supabase = await createClient()
 
   const email = formData.get('email') as string
   const password = formData.get('password') as string
-  const supabase = createClient()
 
   const { error } = await supabase.auth.signInWithPassword({
     email,
@@ -61,11 +70,12 @@ export const signIn = async (formData: FormData) => {
  */
 export const signUp = async (formData: FormData) => {
   'use server'
+  // Supabase client
+  const supabase = await createClient()
 
   const origin = headers().get('origin')
   const email = formData.get('email') as string
   const password = formData.get('password') as string
-  const supabase = createClient()
 
   const { error } = await supabase.auth.signUp({
     email,

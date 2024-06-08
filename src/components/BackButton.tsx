@@ -1,13 +1,16 @@
-import Link from 'next/link'
-import { ComponentProps } from 'react'
+'use client'
 
-// Type definitions
-import { Url } from 'next/dist/shared/lib/router/router'
+import { useRouter } from 'next/navigation'
 
-export default function BackButton({ href }: ComponentProps<'a'>) {
+export default function BackButton() {
+  const router = useRouter()
+
   return (
-    <Link
-      href={href as Url}
+    <a
+      onClick={() => {
+        router.replace('/')
+        console.log('clicked')
+      }}
       className='group absolute left-8 top-8 flex items-center rounded-md bg-btn-background px-4 py-2 text-sm text-foreground no-underline hover:bg-btn-background-hover'
     >
       <svg
@@ -25,6 +28,6 @@ export default function BackButton({ href }: ComponentProps<'a'>) {
         <polyline points='15 18 9 12 15 6' />
       </svg>{' '}
       Back
-    </Link>
+    </a>
   )
 }

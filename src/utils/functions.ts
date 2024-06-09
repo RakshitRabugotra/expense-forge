@@ -1,4 +1,18 @@
 import { Tables } from '@/types/supabase'
+import { MAX_SIGNIFICANT_DIGITS } from './constants'
+
+/* tailwindCSS Util functions */
+
+/**
+ * Generates a tailwindCSS style className string for each style and prefix
+ * @param styles The styles like ['bg-white', 'text-black']
+ * @param prefixes The prefix or state selectors like ['hover', 'focus', 'md']
+ * @returns A joined string containing all the styles
+ */
+export const mapStyles = (styles: string[], prefixes: string[]) =>
+  prefixes
+    .map((prefix) => styles.map((style) => `${prefix}:${style}`).join(' '))
+    .join(' ')
 
 /**
  * Makes the program sleep for some time
@@ -43,7 +57,7 @@ export function groupBy<T>(
 export const currencyFormatterINR = new Intl.NumberFormat('en-IN', {
   style: 'currency',
   currency: 'INR',
-  maximumSignificantDigits: 6,
+  maximumSignificantDigits: MAX_SIGNIFICANT_DIGITS,
 })
 
 /**

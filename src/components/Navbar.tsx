@@ -12,7 +12,8 @@ import {
   FaUserAlt,
 } from 'react-icons/fa'
 import { NavLinkType } from '@/types/navbar'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
+import { mapStyles } from '@/utils/functions'
 
 const links: NavLinkType[] = [
   {
@@ -60,7 +61,9 @@ export default function NavBar({ baseUrl }: { baseUrl: string }) {
           {...navLink}
           baseUrl={baseUrl}
           pathname={pathname}
+          prefetch
           activeClass='[&>svg]:bg-leaf-300 [&>p]:text-leaf-300 [&>svg]:text-white'
+          hoverClass={['bg-leaf-300/50', 'text-white']}
         />
       ))}
     </nav>
@@ -76,6 +79,7 @@ function NavLink({
   className,
   activeClass,
   inactiveClass,
+  hoverClass,
   prefetch,
 }: NavLinkType & {
   baseUrl?: string
@@ -83,6 +87,7 @@ function NavLink({
   className?: string
   activeClass: string
   inactiveClass?: string
+  hoverClass?: string[]
   prefetch?: boolean
 }) {
   // Get the Url for the link, if some base is provided or not
@@ -101,13 +106,13 @@ function NavLink({
         'm-2 basis-[22%] lg:w-[80%]',
         className,
         isActive ? activeClass : inactiveClass,
+        hoverClass ? mapStyles(hoverClass, ['[&>*]:hover', '[&>*]:focus']) : '',
       )}
     >
       <IconComponent
         className={twMerge(
           'mx-auto w-full rounded-full py-1 text-4xl',
           'transition-colors duration-200 ease-in',
-          !isActive ? 'hover:bg-leaf-300/50 hover:text-white' : '',
         )}
       />
 

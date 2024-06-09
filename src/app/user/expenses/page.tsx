@@ -6,6 +6,7 @@ import Heading from '@/components/Heading'
 
 // Custom Components to keep things clean!✨
 import ExpenseList from './expense-list'
+import LoadingFallback from '@/components/LoadingFallback'
 
 export default async function ExpensePage() {
   // Get the current logged in user
@@ -13,7 +14,12 @@ export default async function ExpensePage() {
     data: { user },
   } = await getUser()
 
-  if (!user) return <div>Loading...</div>
+  if (!user)
+    return (
+      <div className='loading-fallback-page'>
+        <LoadingFallback text={'Loading User'} />
+      </div>
+    )
 
   return (
     <>

@@ -62,7 +62,11 @@ export default function BarChart() {
 
   /* While the data has not been fetched */
   if (!categorizedExpenses.current || !expThisMonth)
-    return <LoadingFallback text='Fetching stats' />
+    return (
+      <div>
+        <LoadingFallback text='Fetching stats' />
+      </div>
+    )
 
   return (
     <div className='my-6 flex w-full flex-col gap-6'>

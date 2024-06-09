@@ -42,7 +42,7 @@ export default function ExpenseList({ user }: { user: User }) {
   // If the expenses haven't loaded yet, then show suspense
   if (!expenses) {
     return (
-      <div className='flex w-full grow items-center justify-center'>
+      <div className='loading-fallback-page'>
         <LoadingFallback text={'Fetching Expenses'} />
       </div>
     )

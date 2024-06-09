@@ -68,6 +68,10 @@
     @apply hover:bg-leaf-300/70 hover:text-white/90 focus:bg-leaf-300/70 focus:text-white/90;
     @apply transition-colors duration-200 ease-in;
   }
+
+  .loading-fallback-page {
+    @apply flex w-full grow items-center justify-center;
+  }
 }
 
 .loader {

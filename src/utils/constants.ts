@@ -12,3 +12,6 @@ export const COLORS = [
   '#1775fe' /* Blue */,
   '#c7c6cb' /* Grey */,
 ]
+
+// The Maximum number of significant digits to show
+export const MAX_SIGNIFICANT_DIGITS = 6

@@ -29,9 +29,9 @@ export default function ExpenseItem({
       <IconComponent className='w-[20%] rounded-lg p-2 text-5xl' />
 
       <div className='w-[60%]'>
-        {name && <h4 className='text-xl'>{name}</h4>}
+        {name && <h4 className='text-wrap text-xl'>{name}</h4>}
         {category && (
-          <div className='text-xs font-medium capitalize leading-6'>
+          <div className='text-wrap text-xs font-medium capitalize leading-6'>
             {category}
           </div>
         )}
@@ -40,7 +40,9 @@ export default function ExpenseItem({
       <div className='flex w-[20%] flex-col items-center justify-center text-5xl'>
         {expenditure && (
           <>
-            <p className='text-base'>{formattedExp}</p>
+            <p className='max-w-full text-wrap break-words text-center text-base'>
+              {formattedExp}
+            </p>
           </>
         )}
       </div>

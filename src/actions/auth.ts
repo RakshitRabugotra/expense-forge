@@ -88,8 +88,6 @@ export const signUp = async (formData: FormData) => {
     },
   })
 
-  console.log({ firstName, lastName, email, password, error })
-
   if (error) {
     return redirect('/login?message=Could not authenticate user')
   }

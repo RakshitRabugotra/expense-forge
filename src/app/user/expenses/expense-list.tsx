@@ -25,18 +25,19 @@ export default function ExpenseList({ user }: { user: User }) {
   const [expenses, setExpenses] = useState<Expense[] | null>(null)
   // The state variable which will trigger the refresh in fetching the expenses
   const [refresh, setRefresh] = useState<number>(0)
+  // The state variable to change every time we click
+  const [count, setCount] = useState<number>(0)
 
   // The selected expense for the update process
   const [selectedExpense, setSelected] = useState<Expense | null>(null)
 
   useEffect(() => {
+    // Fetch expenses after every 10 seconds
     getExpenses(user.id).then((response) => {
       setExpenses(response.data)
     })
     if (refresh <= 0) return
   }, [user, refresh])
-
-  console.log('selected: ', selectedExpense)
 
   // If the expenses haven't loaded yet, then show suspense
   if (!expenses) {
@@ -56,7 +57,10 @@ export default function ExpenseList({ user }: { user: User }) {
               key={index}
               {...value}
               IconComponent={RiMoneyDollarCircleFill}
-              onClick={() => setSelected(value)}
+              onClick={() => {
+                setSelected(value)
+                setCount((prev) => prev + 1)
+              }}
             />
           )
         })}
@@ -64,7 +68,11 @@ export default function ExpenseList({ user }: { user: User }) {
       {/* Add expense button */}
       <AddExpenseBtn setRefresh={setRefresh} />
       {/* Update expense form */}
-      <UpdateExpenseForm setRefresh={setRefresh} expense={selectedExpense} />
+      <UpdateExpenseForm
+        setRefresh={setRefresh}
+        expense={selectedExpense}
+        refreshCount={count}
+      />
     </>
   )
 }

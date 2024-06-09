@@ -1,8 +1,6 @@
 'use client'
 
-import { animated, useSpring } from '@react-spring/web'
 import React, { useEffect, useRef, useState } from 'react'
-import { twMerge } from 'tailwind-merge'
 
 // Icon dependencies
 import { MdClose } from 'react-icons/md'
@@ -23,9 +21,11 @@ type Expense = Tables<'expenses'>
 
 export default function UpdateExpenseForm({
   setRefresh,
+  refreshCount,
   expense,
 }: {
   setRefresh: React.Dispatch<React.SetStateAction<number>>
+  refreshCount: number
   expense: Expense | null
 }) {
   // Create a mutable instance of expense to update
@@ -34,7 +34,7 @@ export default function UpdateExpenseForm({
   // Change the expense, once mounted
   useEffect(() => {
     setExpense(expense)
-  }, [expense])
+  }, [expense, refreshCount])
 
   return (
     <BottomModal
@@ -43,7 +43,11 @@ export default function UpdateExpenseForm({
         <UpdateExpense {...props} expense={expense} setExpense={setExpense} />
       )}
       OpenButton={(props) => (
-        <OpenButton {...props} updateExpense={updateExpense} />
+        <OpenButton
+          {...props}
+          updateExpense={updateExpense}
+          refreshCount={refreshCount}
+        />
       )}
       onClose={() => setExpense(null)}
     />
@@ -53,15 +57,23 @@ export default function UpdateExpenseForm({
 function OpenButton({
   openForm,
   updateExpense,
+  refreshCount,
 }: ModalOpenButtonProps & {
   updateExpense: Expense | null
+  refreshCount: number
 }) {
   // This is just a dummy stateful open button
 
   // Check if the expense changes, then open the update form
   useEffect(() => {
-    if (updateExpense !== null) return openForm()
-  }, [updateExpense])
+    if (updateExpense !== null) {
+      return openForm()
+    }
+
+    return () => {
+      refreshCount = 0
+    }
+  }, [updateExpense, refreshCount])
 
   return <div className='hidden' />
 }

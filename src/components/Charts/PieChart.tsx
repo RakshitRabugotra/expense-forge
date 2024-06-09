@@ -101,7 +101,7 @@ export default function PieChart({ dailyTotal }: { dailyTotal: number }) {
             'absolute left-0 right-0',
             'mx-auto min-h-[80%] w-[80%] rounded-full',
             'bg-foreground',
-            'text-leaf-200 text-center text-base font-medium',
+            'text-center text-base font-medium text-leaf-200',
             'flex flex-col items-center justify-center gap-2',
           )}
         >

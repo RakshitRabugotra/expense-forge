@@ -1,5 +1,5 @@
 import { Tables } from '@/types/supabase'
-import { currencyFormatter } from '@/utils/functions'
+import { compressToUnits, currencyFormatterINR } from '@/utils/functions'
 import { IconType } from 'react-icons'
 import { twMerge } from 'tailwind-merge'
 
@@ -14,10 +14,7 @@ export default function ExpenseItem({
   onClick?: React.MouseEventHandler<HTMLDivElement>
 }) {
   // Extract the different components of the expenditure
-  const formattedExp = currencyFormatter.format(expenditure)
-  const currencySymbol = formattedExp.charAt(0)
-  const integerComponent = formattedExp.slice(1, -3)
-  const decimalComponent = formattedExp.slice(-3)
+  const formattedExp = compressToUnits(expenditure, currencyFormatterINR)
 
   return (
     <div
@@ -32,7 +29,7 @@ export default function ExpenseItem({
       <IconComponent className='w-[20%] rounded-lg p-2 text-5xl' />
 
       <div className='w-[60%]'>
-        {name && <h4 className='text-2xl'>{name}</h4>}
+        {name && <h4 className='text-xl'>{name}</h4>}
         {category && (
           <div className='text-xs font-medium capitalize leading-6'>
             {category}
@@ -43,11 +40,7 @@ export default function ExpenseItem({
       <div className='flex w-[20%] flex-col items-center justify-center text-5xl'>
         {expenditure && (
           <>
-            <p className='text-base'>{currencySymbol}</p>
-            <p className='text-2xl'>{integerComponent}</p>
-            <p className='relative -bottom-[0.2em] text-xs'>
-              {decimalComponent}
-            </p>
+            <p className='text-base'>{formattedExp}</p>
           </>
         )}
       </div>

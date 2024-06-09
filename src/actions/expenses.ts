@@ -25,12 +25,12 @@ export const recordExpense = async (formData: FormData) => {
   const supabase = await createClient()
   // Get the current logged-in user
   const {
-    data: { session },
-  } = await supabase.auth.getSession()
+    data: { user },
+  } = await supabase.auth.getUser()
 
   // If the session is null, then return and say we couldn't do it
-  if (!session) {
-    console.error('ERROR: Cannot Perform Insertion with null session')
+  if (!user) {
+    console.error('ERROR: Cannot Perform Insertion with null user')
     return null
   }
 
@@ -42,7 +42,7 @@ export const recordExpense = async (formData: FormData) => {
 
   return await supabase.from('expenses').insert([
     {
-      user_id: session.user.id,
+      user_id: user.id,
       name,
       category,
       expense_date: date,
@@ -63,12 +63,12 @@ export const updateExpense = async (formData: FormData, id: string) => {
 
   // Get the current logged-in user
   const {
-    data: { session },
-  } = await supabase.auth.getSession()
+    data: { user },
+  } = await supabase.auth.getUser()
 
   // If the session is null, then return and say we couldn't do it
-  if (!session) {
-    console.error('ERROR: Cannot perform update with null session')
+  if (!user) {
+    console.error('ERROR: Cannot perform update with null user')
     return null
   }
 
@@ -99,12 +99,12 @@ export const deleteExpense = async (id: string) => {
   const supabase = await createClient()
   // Get the current logged-in user
   const {
-    data: { session },
-  } = await supabase.auth.getSession()
+    data: { user },
+  } = await supabase.auth.getUser()
 
   // If the session is null, then return and say we couldn't do it
-  if (!session) {
-    console.error('ERROR: Cannot perform delete with null session')
+  if (!user) {
+    console.error('ERROR: Cannot perform delete with null user')
     return null
   }
 

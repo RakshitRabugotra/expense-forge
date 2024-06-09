@@ -105,6 +105,7 @@ function NavLink({
         className={twMerge(
           'mx-auto w-full rounded-full py-1 text-4xl',
           'transition-colors duration-200 ease-in',
+          !isActive ? 'hover:bg-leaf-300/50 hover:text-white' : '',
         )}
       />
 

@@ -12,10 +12,11 @@ import { getExpenses } from '@/actions/expenses'
 // Internal Custom Components
 import ExpenseItem from './expense-item'
 import AddExpenseBtn from '@/components/Expenses/AddExpenseBtn'
+import LoadingFallback from '@/components/LoadingFallback'
+import UpdateExpenseForm from '@/components/Expenses/UpdateExpenseForm'
 
 // Icon Dependencies
 import { RiMoneyDollarCircleFill } from 'react-icons/ri'
-import UpdateExpenseForm from '@/components/Expenses/UpdateExpenseForm'
 
 type Expense = Tables<'expenses'>
 
@@ -37,7 +38,11 @@ export default function ExpenseList({ user }: { user: User }) {
 
   // If the expenses haven't loaded yet, then show suspense
   if (!expenses) {
-    return <div>fetching expenses...</div>
+    return (
+      <div className='flex w-full grow items-center justify-center'>
+        <LoadingFallback text={'Fetching Expenses'} />
+      </div>
+    )
   }
 
   return (

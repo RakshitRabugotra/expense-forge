@@ -48,6 +48,15 @@
   }
 }
 
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid;
+  border-color: #000 #0000;
+  animation: l1 1s infinite;
+}
+
 .animate-in {
   animation: animateIn 0.3s ease 0.15s both;
 }
@@ -60,5 +69,11 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes l1 {
+  to {
+    transform: rotate(0.5turn);
   }
 }

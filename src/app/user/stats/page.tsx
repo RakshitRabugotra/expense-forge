@@ -1,3 +1,11 @@
+import BarChart from '@/components/Charts/BarChart'
+import Heading from '@/components/Heading'
+
 export default function StatsPage() {
-  return <div></div>
+  return (
+    <>
+      <Heading text='Your' coloredText='Stats' />
+      <BarChart />
+    </>
+  )
 }

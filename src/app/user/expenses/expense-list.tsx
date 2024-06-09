@@ -36,6 +36,8 @@ export default function ExpenseList({ user }: { user: User }) {
     if (refresh <= 0) return
   }, [user, refresh])
 
+  console.log('selected: ', selectedExpense)
+
   // If the expenses haven't loaded yet, then show suspense
   if (!expenses) {
     return (
@@ -54,11 +56,7 @@ export default function ExpenseList({ user }: { user: User }) {
               key={index}
               {...value}
               IconComponent={RiMoneyDollarCircleFill}
-              onClick={() => {
-                // if the selected isn't equal to the value, then only set
-                if (value.id === selectedExpense?.id) return
-                else setSelected(value)
-              }}
+              onClick={() => setSelected(value)}
             />
           )
         })}

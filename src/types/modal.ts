@@ -13,4 +13,6 @@ export interface BottomModalProps {
   setRefresh: React.Dispatch<React.SetStateAction<number>>
   ChildComponent: (props: ModalChildProps) => JSX.Element
   OpenButton?: (props: ModalOpenButtonProps) => JSX.Element
+  onClose?: () => void
+  onOpen?: () => void
 }

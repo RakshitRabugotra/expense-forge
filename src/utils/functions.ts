@@ -43,6 +43,7 @@ export function groupBy<T>(
 export const currencyFormatterINR = new Intl.NumberFormat('en-IN', {
   style: 'currency',
   currency: 'INR',
+  maximumSignificantDigits: 6,
 })
 
 /**

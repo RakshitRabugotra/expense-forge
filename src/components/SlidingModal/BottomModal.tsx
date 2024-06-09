@@ -10,6 +10,8 @@ export default function BottomModal({
   setRefresh,
   ChildComponent,
   OpenButton,
+  onOpen,
+  onClose,
 }: BottomModalProps) {
   const [springs, api] = useSpring(() => ({
     from: { bottom: '-100vh' },
@@ -22,6 +24,7 @@ export default function BottomModal({
 
   const openForm = () => {
     setOpen(true)
+    if (onOpen) onOpen()
     api.start({
       from: {
         bottom: '-100vh',
@@ -33,6 +36,7 @@ export default function BottomModal({
   }
   const closeForm = () => {
     setOpen(false)
+    if (onClose) onClose()
     api.start({
       from: {
         bottom: '0vh',

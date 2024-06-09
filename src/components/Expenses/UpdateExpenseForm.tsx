@@ -1,7 +1,7 @@
 'use client'
 
 import { animated, useSpring } from '@react-spring/web'
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 // Icon dependencies
@@ -45,6 +45,7 @@ export default function UpdateExpenseForm({
       OpenButton={(props) => (
         <OpenButton {...props} updateExpense={updateExpense} />
       )}
+      onClose={() => setExpense(null)}
     />
   )
 }
@@ -52,7 +53,9 @@ export default function UpdateExpenseForm({
 function OpenButton({
   openForm,
   updateExpense,
-}: ModalOpenButtonProps & { updateExpense: Expense | null }) {
+}: ModalOpenButtonProps & {
+  updateExpense: Expense | null
+}) {
   // This is just a dummy stateful open button
 
   // Check if the expense changes, then open the update form

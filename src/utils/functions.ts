@@ -1,6 +1,15 @@
 import { Tables } from '@/types/supabase'
 import { MAX_SIGNIFICANT_DIGITS } from './constants'
 
+/* Sorting Utility functions */
+export function sortByDate(a: string, b: string, desc: boolean = false) {
+  if (Date.parse(a) === Date.parse(b)) return 0
+  // if a < b then -1, else 1 (for ascending order, from later to newest)
+  const comparison = Date.parse(a) < Date.parse(b) ? -1 : 1
+  // If descending, then negate the result
+  return desc ? -comparison : comparison
+}
+
 /* tailwindCSS Util functions */
 
 /**
@@ -49,6 +58,29 @@ export function groupBy<T>(
     }
   })
   return map
+}
+
+export type ReducedEntries<T> = {
+  groupKey: string | number
+  entries: T[]
+}
+
+/**
+ * Reduces the grouped element Maps, to an array of objects
+ */
+export function reduceToGroupedEntries<T>(
+  list: Array<T>,
+  keyGetter: (item: T) => string | number,
+  compareFn?: (a: ReducedEntries<T>, b: ReducedEntries<T>) => number,
+) {
+  // Get the grouped entries
+  const groupedEntries = groupBy(list, keyGetter)
+  // Iterate over the map and fill the object array
+  const entries = Array<ReducedEntries<T>>()
+  groupedEntries.forEach((groupEntries, groupKey) => {
+    entries.push({ groupKey, entries: groupEntries })
+  })
+  return compareFn ? entries.sort(compareFn) : entries
 }
 
 /**

@@ -21,7 +21,7 @@ export default function ExpenseItem({
       onClick={onClick}
       className={twMerge(
         'inline-flex w-full items-center justify-between',
-        'rounded-lg border',
+        'rounded-lg border shadow-sm',
         'cursor-pointer select-none',
       )}
     >
@@ -31,7 +31,7 @@ export default function ExpenseItem({
       <div className='w-[60%]'>
         {name && <h4 className='text-wrap text-xl'>{name}</h4>}
         {category && (
-          <div className='text-wrap text-xs font-medium capitalize leading-6'>
+          <div className='text-wrap text-xs font-medium capitalize leading-6 text-inactive'>
             {category}
           </div>
         )}

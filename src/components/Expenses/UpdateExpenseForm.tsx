@@ -162,6 +162,7 @@ function UpdateExpense({
               if (setRefresh) setRefresh((prev) => ++prev)
               resetMenu()
             }}
+            className='bg-emerald-600/70 hover:bg-emerald-700'
           >
             Update
           </SubmitButton>
@@ -174,7 +175,7 @@ function UpdateExpense({
               if (setRefresh) setRefresh((prev) => ++prev)
               resetMenu()
             }}
-            className='bg-red-600'
+            className='bg-red-600/70 hover:bg-red-600'
           >
             Delete
           </SubmitButton>

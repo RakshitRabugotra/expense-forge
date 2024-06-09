@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 // Type definitions
 import { type User } from '@supabase/supabase-js'
@@ -10,13 +10,17 @@ import { type Tables } from '@/types/supabase'
 import { getExpenses } from '@/actions/expenses'
 
 // Internal Custom Components
-import ExpenseItem from './expense-item'
 import AddExpenseBtn from '@/components/Expenses/AddExpenseBtn'
 import LoadingFallback from '@/components/LoadingFallback'
 import UpdateExpenseForm from '@/components/Expenses/UpdateExpenseForm'
+import ExpenseDateGroup from './expense-date-group'
 
-// Icon Dependencies
-import { RiMoneyDollarCircleFill } from 'react-icons/ri'
+// Custom Utilities
+import {
+  ReducedEntries,
+  reduceToGroupedEntries,
+  sortByDate,
+} from '@/utils/functions'
 
 type Expense = Tables<'expenses'>
 
@@ -27,6 +31,8 @@ export default function ExpenseList({ user }: { user: User }) {
   const [refresh, setRefresh] = useState<number>(0)
   // The state variable to change every time we click
   const [count, setCount] = useState<number>(0)
+  // The Expenses grouped by the date
+  const dateGroups = useRef<ReducedEntries<Expense>[] | null>(null)
 
   // The selected expense for the update process
   const [selectedExpense, setSelected] = useState<Expense | null>(null)
@@ -38,6 +44,20 @@ export default function ExpenseList({ user }: { user: User }) {
     })
     if (refresh <= 0) return
   }, [user, refresh])
+
+  // Every time the expenses change, we get the new group
+  dateGroups.current = useMemo(
+    () =>
+      expenses
+        ? reduceToGroupedEntries(
+            expenses,
+            (i) => i.expense_date,
+            (a, b) =>
+              sortByDate(a.groupKey as string, b.groupKey as string, true),
+          )
+        : null,
+    [expenses],
+  )
 
   // If the expenses haven't loaded yet, then show suspense
   if (!expenses) {
@@ -51,19 +71,16 @@ export default function ExpenseList({ user }: { user: User }) {
   return (
     <>
       <div className='auto-rows-[minmax(fit-content, auto)] my-4 grid w-full grid-cols-1 gap-6'>
-        {expenses?.map((value, index) => {
-          return (
-            <ExpenseItem
+        {dateGroups.current &&
+          dateGroups.current.map(({ groupKey, entries }, index) => (
+            <ExpenseDateGroup
+              expenses={entries}
+              title={groupKey as string}
               key={index}
-              {...value}
-              IconComponent={RiMoneyDollarCircleFill}
-              onClick={() => {
-                setSelected(value)
-                setCount((prev) => prev + 1)
-              }}
+              setSelected={setSelected}
+              setCount={setCount}
             />
-          )
-        })}
+          ))}
       </div>
       {/* Add expense button */}
       <AddExpenseBtn setRefresh={setRefresh} />

@@ -8,7 +8,7 @@ export default function Input({
 }: ComponentProps<'input'> & { label?: string }) {
   return (
     <label htmlFor={props.name}>
-      {label && <span className='text-md'>{label}</span>}
+      {label && <span className='text-md select-none'>{label}</span>}
       <input
         {...props}
         required
@@ -16,10 +16,9 @@ export default function Input({
         className={twMerge(
           'w-full px-4 py-2',
           'text-lg placeholder-gray-500',
-          'border-b border-b-gray-400',
-          'rounded-md bg-inherit',
-          'focus:outline-none',
-          'focus:border-leaf-800 focus:border-2',
+          'border-b-2 border-b-gray-400',
+          'bg-inherit',
+          'focus:border-leaf-800 focus:outline-none',
           'transition-colors duration-200',
           className,
         )}

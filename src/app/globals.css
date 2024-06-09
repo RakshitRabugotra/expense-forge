@@ -46,6 +46,28 @@
     -webkit-backdrop-filter: blur(3rem);
     backdrop-filter: blur(3rem);
   }
+
+  .pop-up-container {
+    @apply fixed z-20;
+    @apply bg-transparent;
+    @apply right-0 min-h-[50vh] w-full max-w-screen-sm;
+  }
+
+  .pop-up {
+    @apply min-h-[50vh] w-full;
+    @apply flex flex-col items-center;
+    @apply rounded-3xl border-t-2 border-leaf-800 shadow-lg lg:rounded-none lg:border-2;
+    @apply bg-white/80 text-black backdrop-blur-md;
+  }
+
+  .pop-up-close {
+    @apply absolute right-4 top-[50%] -translate-y-1/2;
+    @apply rounded-full;
+    @apply font-medium;
+    @apply cursor-pointer;
+    @apply hover:bg-leaf-300/70 hover:text-white/90 focus:bg-leaf-300/70 focus:text-white/90;
+    @apply transition-colors duration-200 ease-in;
+  }
 }
 
 .loader {

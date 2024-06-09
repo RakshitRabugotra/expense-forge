@@ -50,6 +50,8 @@ export default function NavBar({ baseUrl }: { baseUrl: string }) {
         'overflow-clip',
         '[&>*]:transition-all [&>*]:duration-300',
         '[&>*]:text-2xl [&>*]:text-foreground',
+        'lg:bottom-0 lg:left-0 lg:right-auto lg:top-0',
+        'lg:flex-col',
       )}
     >
       {links.map((navLink, index) => (
@@ -96,7 +98,7 @@ function NavLink({
       href={url}
       prefetch={prefetch}
       className={twMerge(
-        'm-2 basis-[22%]',
+        'm-2 basis-[22%] lg:w-[80%]',
         className,
         isActive ? activeClass : inactiveClass,
       )}

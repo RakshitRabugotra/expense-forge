@@ -15,6 +15,8 @@ import Input from '@/components/Forms/Input'
 import moment from 'moment'
 import SubmitButton from './expense-submit-button'
 import { deleteExpense, updateExpense } from '@/actions/expenses'
+import BottomModal from '../SlidingModal/BottomModal'
+import { ModalOpenButtonProps } from '@/types/modal'
 
 // Set an alias for expense type
 type Expense = Tables<'expenses'>
@@ -23,68 +25,42 @@ export default function UpdateExpenseForm({
   setRefresh,
   expense,
 }: {
-  setRefresh?: React.Dispatch<React.SetStateAction<number>>
+  setRefresh: React.Dispatch<React.SetStateAction<number>>
   expense: Expense | null
 }) {
   // Create a mutable instance of expense to update
   const [updateExpense, setExpense] = useState<Expense | null>(null)
-
-  // Springs for animations
-  const [springs, api] = useSpring(() => ({
-    from: { bottom: '-100vh' },
-  }))
-
-  const openForm = () => {
-    api.start({
-      from: {
-        bottom: '-100vh',
-      },
-      to: {
-        bottom: '0vh',
-      },
-    })
-  }
-
-  const closeForm = () => {
-    api.start({
-      from: {
-        bottom: '0vh',
-      },
-      to: {
-        bottom: '-100vh',
-      },
-    })
-  }
 
   // Change the expense, once mounted
   useEffect(() => {
     setExpense(expense)
   }, [expense])
 
+  return (
+    <BottomModal
+      setRefresh={setRefresh}
+      ChildComponent={(props) => (
+        <UpdateExpense {...props} expense={expense} setExpense={setExpense} />
+      )}
+      OpenButton={(props) => (
+        <OpenButton {...props} updateExpense={updateExpense} />
+      )}
+    />
+  )
+}
+
+function OpenButton({
+  openForm,
+  updateExpense,
+}: ModalOpenButtonProps & { updateExpense: Expense | null }) {
+  // This is just a dummy stateful open button
+
   // Check if the expense changes, then open the update form
   useEffect(() => {
     if (updateExpense !== null) return openForm()
   }, [updateExpense])
 
-  return (
-    <>
-      <animated.div
-        className={twMerge(
-          'fixed z-30',
-          'bg-transparent',
-          'min-h-[50vh] w-full',
-        )}
-        style={springs}
-      >
-        <UpdateExpense
-          expense={updateExpense}
-          setExpense={setExpense}
-          closeForm={closeForm}
-          setRefresh={setRefresh}
-        />
-      </animated.div>
-    </>
-  )
+  return <div className='hidden' />
 }
 
 function UpdateExpense({
@@ -116,22 +92,10 @@ function UpdateExpense({
   }
 
   return (
-    <div
-      className={twMerge(
-        'min-h-[50vh] w-full',
-        'flex flex-col items-center',
-        'border-leaf-800 rounded-3xl border-t-2',
-        'bg-white/80 text-black backdrop-blur-md',
-      )}
-    >
+    <div className='pop-up'>
       <h3 className='relative w-full p-4 text-3xl font-light capitalize'>
         {name.length !== 0 ? name : 'Update Expense'}
-        <MdClose
-          className={twMerge(
-            'absolute right-4 top-[50%] -translate-y-1/2 font-medium',
-          )}
-          onClick={() => resetMenu()}
-        />
+        <MdClose className='pop-up-close' onClick={() => resetMenu()} />
       </h3>
 
       <form

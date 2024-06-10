@@ -20,6 +20,7 @@ import { Tables } from '@/types/supabase'
 
 // Content Dependencies
 import { COLORS } from '@/utils/constants'
+import { simpleReduce } from '@/utils/functions/array'
 
 type Expense = Tables<'expenses'>
 
@@ -50,12 +51,15 @@ export default function BarChart() {
       max: categorizedExpenses.current
         ? Math.max(...categorizedExpenses.current.map((i) => i.total))
         : Infinity,
-      total: categorizedExpenses.current
-        ? categorizedExpenses.current.reduce((prev, curr) => ({
-            ...prev,
-            total: prev.total + curr.total,
-          })).total
-        : 0,
+      total:
+        categorizedExpenses.current && categorizedExpenses.current.length > 0
+          ? simpleReduce(
+              categorizedExpenses.current,
+              'total',
+              (prev, curr) =>
+                parseInt(prev as string) + parseInt(curr as string),
+            ).total
+          : 0,
     }),
     [categorizedExpenses.current],
   )
@@ -71,21 +75,37 @@ export default function BarChart() {
   return (
     <div className='my-6 flex w-full flex-col gap-6'>
       <p>Bar Chart</p>
-      <div className='flex flex-col justify-between'>
-        {categorizedExpenses.current.map((value, index) => {
-          // Get the maximum expense, and set the bars according to it
+      {categorizedExpenses.current.length > 0 ? (
+        <Chart groups={categorizedExpenses.current} stats={stats.current} />
+      ) : (
+        <div>No Expenses till now...</div>
+      )}
+    </div>
+  )
+}
 
-          return (
-            <Bar
-              key={index}
-              title={value.category}
-              maxWidthPercentage={100 * (value.total / stats.current.max)}
-              grossPercentage={100 * (value.total / stats.current.total)}
-              index={index}
-            />
-          )
-        })}
-      </div>
+function Chart({
+  groups,
+  stats,
+}: {
+  groups: CategorizedExpenses[]
+  stats: { max: number; total: number }
+}) {
+  return (
+    <div className='flex flex-col justify-between'>
+      {groups.map((value, index) => {
+        // Get the maximum expense, and set the bars according to it
+
+        return (
+          <Bar
+            key={index}
+            title={value.category}
+            maxWidthPercentage={100 * (value.total / stats.max)}
+            grossPercentage={100 * (value.total / stats.total)}
+            index={index}
+          />
+        )
+      })}
     </div>
   )
 }

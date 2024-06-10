@@ -10,6 +10,7 @@ export type CategorizedExpenses = { category: string; total: number }
  * @returns The reduced expenditure number
  */
 export const reduceExpenses = (expenses: Tables<'expenses'>[]) => {
+  if (expenses.length === 0) return 0
   return simpleReduce(
     expenses,
     'expenditure',

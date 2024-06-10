@@ -8,11 +8,11 @@ import { createClient } from '@/utils/supabase/server'
  * @param id The id of the user
  * @returns All the expenses done by the user
  */
-export const getExpenses = async (id: string) => {
+export const getExpenses = async () => {
   // Create a supabase client
   const supabase = await createClient()
   // Fetch all the expenses related to that id
-  return await supabase.from('expenses').select('*').eq('user_id', id)
+  return await supabase.from('expenses').select('*')
 }
 
 /**
@@ -23,16 +23,6 @@ export const getExpenses = async (id: string) => {
 export const recordExpense = async (formData: FormData) => {
   // Create a supabase client
   const supabase = await createClient()
-  // Get the current logged-in user
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  // If the session is null, then return and say we couldn't do it
-  if (!user) {
-    console.error('ERROR: Cannot Perform Insertion with null user')
-    return null
-  }
 
   // Extract the information
   const name = formData.get('expense-name') as string
@@ -42,7 +32,6 @@ export const recordExpense = async (formData: FormData) => {
 
   return await supabase.from('expenses').insert([
     {
-      user_id: user.id,
       name,
       category,
       expense_date: date,
@@ -60,18 +49,6 @@ export const recordExpense = async (formData: FormData) => {
 export const updateExpense = async (formData: FormData, id: string) => {
   // Create a supabase client
   const supabase = await createClient()
-
-  // Get the current logged-in user
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  // If the session is null, then return and say we couldn't do it
-  if (!user) {
-    console.error('ERROR: Cannot perform update with null user')
-    return null
-  }
-
   // Extract the fields
   const name = formData.get('expense-name') as string
   const category = formData.get('expense-category') as string
@@ -97,16 +74,6 @@ export const updateExpense = async (formData: FormData, id: string) => {
 export const deleteExpense = async (id: string) => {
   // Create a supabase client
   const supabase = await createClient()
-  // Get the current logged-in user
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  // If the session is null, then return and say we couldn't do it
-  if (!user) {
-    console.error('ERROR: Cannot perform delete with null user')
-    return null
-  }
 
   return await supabase.from('expenses').delete().eq('id', id)
 }

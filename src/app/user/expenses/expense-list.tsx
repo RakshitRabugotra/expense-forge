@@ -20,11 +20,11 @@ import {
   ReducedEntries,
   reduceToGroupedEntries,
   sortByDate,
-} from '@/utils/functions'
+} from '@/utils/functions/array'
 
 type Expense = Tables<'expenses'>
 
-export default function ExpenseList({ user }: { user: User }) {
+export default function ExpenseList() {
   // The state variables for the component
   const [expenses, setExpenses] = useState<Expense[] | null>(null)
   // The state variable which will trigger the refresh in fetching the expenses
@@ -39,11 +39,11 @@ export default function ExpenseList({ user }: { user: User }) {
 
   useEffect(() => {
     // Fetch expenses after every 10 seconds
-    getExpenses(user.id).then((response) => {
+    getExpenses().then((response) => {
       setExpenses(response.data)
     })
     if (refresh <= 0) return
-  }, [user, refresh])
+  }, [refresh])
 
   // Every time the expenses change, we get the new group
   dateGroups.current = useMemo(

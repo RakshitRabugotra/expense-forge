@@ -1,5 +1,8 @@
 import { Tables } from '@/types/supabase'
-import { compressToUnits, currencyFormatterINR } from '@/utils/functions'
+import {
+  compressToUnits,
+  currencyFormatterINR,
+} from '@/utils/functions/currency'
 import { IconType } from 'react-icons'
 import { twMerge } from 'tailwind-merge'
 

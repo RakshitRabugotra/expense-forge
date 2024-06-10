@@ -75,24 +75,24 @@ export type Database = {
       }
       user_personalization: {
         Row: {
-          daily_limit: number | null
-          id: string
-          monthly_limit: number | null
+          daily_limit: number
+          monthly_limit: number
+          user_id: string
         }
         Insert: {
-          daily_limit?: number | null
-          id: string
-          monthly_limit?: number | null
+          daily_limit: number
+          monthly_limit: number
+          user_id?: string
         }
         Update: {
-          daily_limit?: number | null
-          id?: string
-          monthly_limit?: number | null
+          daily_limit?: number
+          monthly_limit?: number
+          user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "user_details_id_fkey"
-            columns: ["id"]
+            foreignKeyName: "user_personalization_user_id_fkey"
+            columns: ["user_id"]
             isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]

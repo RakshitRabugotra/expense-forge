@@ -10,7 +10,7 @@ import ExpenseItem from './expense-item'
 import { RiMoneyDollarCircleFill } from 'react-icons/ri'
 import { twMerge } from 'tailwind-merge'
 import { useMemo } from 'react'
-import { sortByDate } from '@/utils/functions'
+import { sortByDate } from '@/utils/functions/array'
 
 // Alias for the type
 type Expense = Tables<'expenses'>

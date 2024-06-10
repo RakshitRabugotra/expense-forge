@@ -1,7 +1,8 @@
-import { getSession, getUser } from '@/actions/auth'
+import { getUser } from '@/actions/auth'
 import AuthButton from '@/components/Auth/AuthButton'
 import PieChart from '@/components/Charts/PieChart'
-import Heading from '@/components/Heading'
+import Dashboard from '@/components/Dashboard/Dashboard'
+import InlineHeading from '@/components/InlineHeading'
 
 export default async function ProtectedPage() {
   const {
@@ -15,10 +16,14 @@ export default async function ProtectedPage() {
 
   return (
     <>
-      <Heading
-        text='Hello'
+      <InlineHeading
+        text='Hello,'
         coloredText={(user_metadata?.firstName ?? '') + '!'}
+        className='mb-10'
       />
+      {/* Show the dashboard */}
+      <Dashboard />
+
       <PieChart dailyTotal={40} />
       <AuthButton />
     </>

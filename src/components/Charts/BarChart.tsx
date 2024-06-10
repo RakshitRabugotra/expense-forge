@@ -10,7 +10,7 @@ import { getExpenseThisMonth } from '@/actions/stats'
 import {
   CategorizedExpenses,
   reduceCategorizedExpenses,
-} from '@/utils/functions'
+} from '@/utils/functions/expenses'
 
 // Internal Dependencies
 import LoadingFallback from '@/components/LoadingFallback'

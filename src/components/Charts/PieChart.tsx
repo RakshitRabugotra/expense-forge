@@ -1,12 +1,21 @@
 'use client'
 
-import { getCategorizedExpenses } from '@/actions/stats'
-import { Tables } from '@/types/supabase'
-import { COLORS } from '@/utils/constants'
 import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js'
 import { useEffect, useMemo, useState } from 'react'
 import { Pie } from 'react-chartjs-2'
 import { twMerge } from 'tailwind-merge'
+
+// Custom Actions
+import { getCategorizedExpenses } from '@/actions/stats'
+
+// Type definitions
+import { Tables } from '@/types/supabase'
+
+// Content Dependencies
+import { COLORS } from '@/utils/constants'
+
+// Internal Dependencies
+import SubHeading from '../Dashboard/sub-heading'
 
 ChartJS.register(ArcElement, Tooltip)
 
@@ -45,8 +54,6 @@ export default function PieChart({ dailyTotal }: { dailyTotal: number }) {
   useEffect(() => {
     getCategorizedExpenses().then((value) => setCategorizedExp(value ?? null))
   }, [])
-
-  console.log(categorizedExp)
 
   /* The data for expense pie chart */
   const EXPENSE_DATA = useMemo(
@@ -89,27 +96,26 @@ export default function PieChart({ dailyTotal }: { dailyTotal: number }) {
     [categorizedExp],
   )
 
-  console.log(EXPENSE_DATA)
-
   return (
-    <div className='flex flex-col gap-6'>
-      <h3>{"Today's Expense"}</h3>
-      <div className='relative flex w-full flex-col justify-center'>
-        <Pie data={EXPENSE_DATA} options={CHART_OPTIONS} />
-        <div
-          className={twMerge(
-            'absolute left-0 right-0',
-            'mx-auto min-h-[80%] w-[80%] rounded-full',
-            'bg-foreground',
-            'text-center text-base font-medium text-leaf-200',
-            'flex flex-col items-center justify-center gap-2',
-          )}
-        >
-          {/* Calculate the daily expense percentage, based on the limit */}
-          <h4 className='text-[32px]'>
-            {((dailyTotal * 100) / dailyTotal).toFixed(2) + '%'}
-          </h4>
-          {/* {dailyLimit && (
+    <>
+      <SubHeading>Today's Expenses</SubHeading>
+      <div className='flex flex-col gap-6'>
+        <div className='relative flex w-full flex-col justify-center'>
+          <Pie data={EXPENSE_DATA} options={CHART_OPTIONS} />
+          <div
+            className={twMerge(
+              'absolute left-0 right-0',
+              'mx-auto min-h-[80%] w-[80%] rounded-full',
+              'bg-foreground',
+              'text-center text-base font-medium text-leaf-200',
+              'flex flex-col items-center justify-center gap-2',
+            )}
+          >
+            {/* Calculate the daily expense percentage, based on the limit */}
+            <h4 className='text-[32px]'>
+              {((dailyTotal * 100) / dailyTotal).toFixed(2) + '%'}
+            </h4>
+            {/* {dailyLimit && (
             <>
               <div>of daily limit</div>
               <h4 className='text-[32px]'>
@@ -117,8 +123,9 @@ export default function PieChart({ dailyTotal }: { dailyTotal: number }) {
               </h4>
             </>
           )} */}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

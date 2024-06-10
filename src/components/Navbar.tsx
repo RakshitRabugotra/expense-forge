@@ -1,8 +1,9 @@
 'use client'
 
+import { useMemo } from 'react'
 import { usePathname } from 'next/navigation'
-import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
+import Link from 'next/link'
 
 // Icon dependencies
 import {
@@ -11,9 +12,12 @@ import {
   FaProjectDiagram,
   FaUserAlt,
 } from 'react-icons/fa'
+
+// Internal Dependencies
 import { NavLinkType } from '@/types/navbar'
-import { useMemo, useState } from 'react'
-import { mapStyles } from '@/utils/functions'
+
+// Custom Utilities
+import { mapStyles } from '@/utils/functions/css'
 
 const links: NavLinkType[] = [
   {

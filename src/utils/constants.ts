@@ -4,6 +4,11 @@ import { ComponentProps } from 'react'
 /**
  * The metadata about the app
  */
+
+export const APP_NAME = 'ExpenseForge'
+export const APP_SLOGAN = 'Sculpt Your Finances'
+export const APP_DESCRIPTION =
+  "ExpenseForge is your ultimate personal finance companion, designed to help you master your money with ease and confidence. Whether you're looking to track your daily expenses, set and stick to a budget, or plan for future savings, ExpenseForge provides the tools you need to take control of your financial destiny."
 export const PROTECTED_URL = '/user'
 
 // Colors used to categorized expenses in graphs
@@ -43,4 +48,5 @@ export const PERSONALIZATION_FIELDS_INPUTS: Record<
   },
   daily_limit: null,
   user_id: null,
+  updated_at: null,
 }

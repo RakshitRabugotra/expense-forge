@@ -1,13 +1,15 @@
 import { GeistSans } from 'geist/font/sans'
 import './globals.css'
 import { APP_DESCRIPTION, APP_NAME, APP_SLOGAN } from '@/utils/constants'
+import { Metadata } from 'next'
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : 'http://localhost:3000'
 
-export const metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
+  manifest: '/manifest.json',
   title: [APP_NAME, APP_SLOGAN].join(' — '),
   description: APP_DESCRIPTION,
 }

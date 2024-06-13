@@ -48,12 +48,14 @@
   }
 
   .pop-up-container {
+    @apply select-none;
     @apply fixed z-20;
     @apply bg-transparent;
     @apply right-0 min-h-[50vh] w-full max-w-screen-sm;
   }
 
   .pop-up-container-fullscreen {
+    @apply select-none;
     @apply fixed z-0;
     @apply bg-black/90;
     @apply inset-0;
@@ -62,6 +64,7 @@
   }
 
   .pop-up {
+    @apply select-none;
     @apply min-h-[50vh] w-full;
     @apply flex flex-col items-center;
     @apply rounded-3xl border-t-2 border-leaf-800 shadow-lg lg:rounded-none lg:border-2;
@@ -69,6 +72,7 @@
   }
 
   .pop-up-fullscreen {
+    @apply select-none;
     @apply w-[80vw] max-w-screen-sm;
     @apply flex flex-col items-center;
     @apply rounded-3xl border-t-2 border-leaf-800 shadow-lg lg:rounded-none lg:border-2;
@@ -76,6 +80,7 @@
   }
 
   .pop-up-close {
+    @apply select-none;
     @apply absolute right-4 top-[50%] -translate-y-1/2;
     @apply rounded-full;
     @apply font-medium;

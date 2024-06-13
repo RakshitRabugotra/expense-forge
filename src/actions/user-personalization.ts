@@ -76,7 +76,7 @@ export const recordUserPersonalizations = async (formData: FormData) => {
     const { data, error } = await supabase.from('user_personalization').insert([
       {
         monthly_limit,
-        daily_limit: monthly_limit / daysLeftInThisMonth(),
+        daily_limit: Math.floor(monthly_limit / daysLeftInThisMonth()),
         updated_at: moment.utc().format('YYYY-MM-DD'),
       },
     ])

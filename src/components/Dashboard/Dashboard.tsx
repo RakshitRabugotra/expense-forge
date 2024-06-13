@@ -12,9 +12,14 @@ import {
 // Custom Actions
 import { getUserPersonalizations } from '@/actions/user-personalization'
 import { getExpenseThisMonth, getExpensesToday } from '@/actions/stats'
+
+// Custom Utilities
 import { reduceExpenses } from '@/utils/functions/expenses'
 
-export default function Dashboard() {
+// Type definitions
+import { HTMLElementProps } from '@/types/page-component'
+
+export default function Dashboard({ id, className }: HTMLElementProps) {
   // The state for selecting the selected dash
   const [isDaily, setIsDaily] = useState<boolean>(true)
 
@@ -47,14 +52,20 @@ export default function Dashboard() {
   console.log({ monthlyGoal })
 
   return (
-    <section className='flex min-h-[25vh] w-full flex-col rounded-xl border bg-black/50 p-3'>
+    <section
+      id={id}
+      className={twMerge(
+        'flex min-h-[25vh] w-full flex-col rounded-xl border bg-black/70 p-3',
+        className,
+      )}
+    >
       <div className='flex w-full flex-row items-center justify-between'>
         <button
           onClick={() => setIsDaily(true)}
           className={twMerge(
             isDaily
               ? 'border-b-emerald-500 font-bold text-white/80'
-              : 'border-b-black/10 font-normal text-black/50',
+              : 'border-b-black/10 font-normal text-black/70',
             'm-2 mx-4 border-b-4 px-2',
             'transition-all duration-200 ease-in-out',
           )}
@@ -66,7 +77,7 @@ export default function Dashboard() {
           className={twMerge(
             !isDaily
               ? 'border-b-emerald-500 font-bold text-white/80'
-              : 'border-b-black/10 font-normal text-black/50',
+              : 'border-b-black/10 font-normal text-black/70',
             'm-2 mx-4 border-b-4 px-2',
             'transition-all duration-200 ease-in-out',
           )}

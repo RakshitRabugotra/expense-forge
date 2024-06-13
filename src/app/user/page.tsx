@@ -1,4 +1,5 @@
 import { getUser } from '@/actions/auth'
+import { getUserPersonalizations } from '@/actions/user-personalization'
 import AuthButton from '@/components/Auth/AuthButton'
 import PieChart from '@/components/Charts/PieChart'
 import Dashboard from '@/components/Dashboard/Dashboard'
@@ -14,6 +15,11 @@ export default async function ProtectedPage() {
   // Extract the user from session
   const { user_metadata } = user
 
+  // Get the user daily limit
+  const userPreference = await getUserPersonalizations()
+  // If the preference doesn't exist then we're fucked
+  if (!userPreference) return <div>Something went wrong</div>
+
   return (
     <>
       <InlineHeading
@@ -22,9 +28,9 @@ export default async function ProtectedPage() {
         className='mb-10'
       />
       {/* Show the dashboard */}
-      <Dashboard />
-
-      <PieChart dailyTotal={40} />
+      <Dashboard className='mb-10' />
+      {/* The Pie Chart for analytics */}
+      <PieChart dailyLimit={userPreference.daily_limit} className='mb-10' />
       <AuthButton />
     </>
   )

@@ -73,10 +73,10 @@ export const recordUserPersonalizations = async (formData: FormData) => {
   // If the record doesn't exists, then send an insertion request
   if (rowFetchError && rowFetchError.code === 'PGRST116') {
     // This means the record doesn't exists, insert a new row
-    const { error } = await supabase.from('user_personalization').insert([
+    const { data, error } = await supabase.from('user_personalization').insert([
       {
         monthly_limit,
-        daily_limit: 0,
+        daily_limit: monthly_limit / daysLeftInThisMonth(),
         updated_at: moment.utc().format('YYYY-MM-DD'),
       },
     ])
@@ -85,7 +85,7 @@ export const recordUserPersonalizations = async (formData: FormData) => {
       console.log("ERROR: Couldn't update the user preferences", error)
       return null
     }
-    return await updateDailyLimit(monthly_limit)
+    return data
   }
 
   // Else send an insert query

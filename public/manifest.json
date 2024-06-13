@@ -27,7 +27,7 @@
   ],
   "theme_color": "#FFFFFF",
   "background_color": "#FFFFFF",
-  "start_url": "/login",
+  "start_url": "/user",
   "scope": ".",
   "display": "standalone",
   "orientation": "portrait"

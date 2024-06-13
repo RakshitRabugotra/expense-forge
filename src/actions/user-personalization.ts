@@ -80,11 +80,11 @@ export const recordUserPersonalizations = async (formData: FormData) => {
         updated_at: moment.utc().format('YYYY-MM-DD'),
       },
     ])
+
     if (error) {
       console.log("ERROR: Couldn't update the user preferences", error)
       return null
     }
-
     return await updateDailyLimit(monthly_limit)
   }
 
@@ -114,19 +114,19 @@ export const recordUserPersonalizations = async (formData: FormData) => {
 export const updateDailyLimit = async (monthlyLimit: number) => {
   // The expenditure done by the user this month
   const expenditureThisMonth = await getExpenseThisMonth()
+  let monthTotalNow = 0
 
+  // If there are no expenditures this month, then the total is 0
   if (!expenditureThisMonth) {
-    console.log(
-      "ERROR: Couldn't fetch the expenses this month, aborting updating daily limit",
-    )
-    return null
+    monthTotalNow = 0
+  } else {
+    // Get the total expenditure this month
+    monthTotalNow = simpleReduce(
+      expenditureThisMonth,
+      'expenditure',
+      (prev, curr) => parseInt(prev as string) + parseInt(curr as string),
+    ).expenditure
   }
-  // Get the total expenditure this month
-  const monthTotalNow = simpleReduce(
-    expenditureThisMonth,
-    'expenditure',
-    (prev, curr) => parseInt(prev as string) + parseInt(curr as string),
-  ).expenditure
 
   // Days left in this month
   const daysLeft = daysLeftInThisMonth()

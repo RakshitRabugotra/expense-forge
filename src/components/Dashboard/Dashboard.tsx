@@ -47,7 +47,7 @@ export default function Dashboard() {
   console.log({ monthlyGoal })
 
   return (
-    <section className='flex w-full flex-col items-center rounded-xl border bg-black/50 p-3'>
+    <section className='flex min-h-[25vh] w-full flex-col rounded-xl border bg-black/50 p-3'>
       <div className='flex w-full flex-row items-center justify-between'>
         <button
           onClick={() => setIsDaily(true)}
@@ -79,7 +79,7 @@ export default function Dashboard() {
         current={
           isDaily
             ? { title: 'expense today', figure: thisDay }
-            : { title: 'monthly expense', figure: thisMonth }
+            : { title: 'monthly figure', figure: thisMonth }
         }
         goal={
           isDaily
@@ -100,7 +100,7 @@ function Dash({
 }) {
   return (
     <>
-      <fieldset className='flex w-full flex-row rounded-xl bg-foreground [&>*]:basis-1/2'>
+      <fieldset className='flex w-full grow flex-row rounded-xl bg-foreground'>
         <ExpenseField {...current} />
         <ExpenseField {...goal} />
       </fieldset>
@@ -120,24 +120,24 @@ function ExpenseField({ title, figure, onClick }: ExpenseFieldProps) {
     from: { number: 0 },
     to: { number: figure },
     delay: 0,
-    config: config.gentle,
+    config: config.stiff,
   })
 
   return (
     <div
       className={twMerge(
-        'flex flex-col',
+        'flex grow basis-1/2 flex-col',
         'select-none text-white',
         'p-2 px-4',
         onClick ? 'cursor-pointer' : '',
       )}
       onClick={onClick}
     >
-      <p className='grow break-words text-base font-medium capitalize text-white/70'>
+      <p className='break-words text-base font-medium capitalize text-white/70'>
         {title}
       </p>
       <animated.h2 className='max-w-full break-words text-3xl font-bold leading-snug'>
-        {number.to((n) => compressToUnits(n, currencyFormatterINR, 2))}
+        {number.to((n) => compressToUnits(n, currencyFormatterINR, 1))}
       </animated.h2>
     </div>
   )

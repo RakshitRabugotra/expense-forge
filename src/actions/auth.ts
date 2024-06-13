@@ -57,6 +57,7 @@ export const signIn = async (formData: FormData) => {
   })
 
   if (error) {
+    console.log('ERROR: ', error)
     return redirect('/login?message=Could not authenticate user')
   }
 
@@ -89,7 +90,10 @@ export const signUp = async (formData: FormData) => {
   })
 
   if (error) {
-    return redirect('/login?message=Could not authenticate user')
+    console.log('ERROR: ', error)
+    return redirect(
+      `/login?message=${error.code === 'over_email_send_rate_limit' ? 'Servers at capacity... try again later' : 'Could not authenticate user'}`,
+    )
   }
 
   return redirect('/login?message=Check email to continue sign in process')

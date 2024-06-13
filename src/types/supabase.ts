@@ -77,16 +77,19 @@ export type Database = {
         Row: {
           daily_limit: number
           monthly_limit: number
+          updated_at: string
           user_id: string
         }
         Insert: {
-          daily_limit: number
-          monthly_limit: number
+          daily_limit?: number
+          monthly_limit?: number
+          updated_at: string
           user_id?: string
         }
         Update: {
           daily_limit?: number
           monthly_limit?: number
+          updated_at?: string
           user_id?: string
         }
         Relationships: [

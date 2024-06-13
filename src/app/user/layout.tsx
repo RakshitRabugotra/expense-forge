@@ -1,6 +1,7 @@
 // Internal Dependencies
 import AuthProtected from '@/components/Auth/AuthProtected'
 import NavBar from '@/components/Navbar'
+import PersonalizationProtected from '@/components/Personalization/PersonalizationProtected'
 
 export default async function RootLayout({
   children,
@@ -9,8 +10,12 @@ export default async function RootLayout({
 }) {
   return (
     <>
-      <NavBar baseUrl='/user' />
-      <AuthProtected>{children}</AuthProtected>
+      <AuthProtected>
+        <PersonalizationProtected>
+          <NavBar baseUrl='/user' />
+          {children}
+        </PersonalizationProtected>
+      </AuthProtected>
     </>
   )
 }

@@ -53,8 +53,23 @@
     @apply right-0 min-h-[50vh] w-full max-w-screen-sm;
   }
 
+  .pop-up-container-fullscreen {
+    @apply fixed z-0;
+    @apply bg-black/90;
+    @apply inset-0;
+    @apply min-h-screen;
+    @apply flex items-center justify-center;
+  }
+
   .pop-up {
     @apply min-h-[50vh] w-full;
+    @apply flex flex-col items-center;
+    @apply rounded-3xl border-t-2 border-leaf-800 shadow-lg lg:rounded-none lg:border-2;
+    @apply bg-white/80 text-black backdrop-blur-md;
+  }
+
+  .pop-up-fullscreen {
+    @apply w-[80vw] max-w-screen-sm;
     @apply flex flex-col items-center;
     @apply rounded-3xl border-t-2 border-leaf-800 shadow-lg lg:rounded-none lg:border-2;
     @apply bg-white/80 text-black backdrop-blur-md;

@@ -1,7 +1,23 @@
 'use server'
 
+import { Tables } from '@/types/supabase'
+import {
+  PERSONALIZATION_FIELDS_INPUTS,
+  PersonalizationFields,
+} from '@/utils/constants'
+import { daysLeftInThisMonth } from '@/utils/functions/chrono'
 import { createClient } from '@/utils/supabase/server'
+import moment from 'moment'
+import { getExpenseThisMonth } from './stats'
+import { simpleReduce } from '@/utils/functions/array'
 
+// Alias for the type
+type Personalization = Tables<'expenses'>
+
+/**
+ *
+ * @returns The user preferences that is logged in
+ */
 export const getUserPersonalizations = async () => {
   'use server'
   // Create a supabase client instance
@@ -22,8 +38,128 @@ export const getUserPersonalizations = async () => {
     return null
   }
 
-  console.log({ data })
-
   // Else return the data
+  return data
+}
+
+/**
+ * Updates the required fields in the table
+ * @param formData The form data from the form
+ * @returns The data updated in the table
+ */
+export const recordUserPersonalizations = async (formData: FormData) => {
+  // The required fields
+  const monthly_limit = parseInt(formData.get('monthly_limit') as string)
+
+  // Create a supabase client
+  const supabase = await createClient()
+
+  // Get the user
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    console.log("ERROR: Couldn't update the preference for null user")
+    return null
+  }
+
+  // Check if the record exits
+  const { error: rowFetchError } = await supabase
+    .from('user_personalization')
+    .select('*')
+    .eq('user_id', user.id)
+    .single()
+  // If the record doesn't exists, then send an insertion request
+  if (rowFetchError && rowFetchError.code === 'PGRST116') {
+    // This means the record doesn't exists, insert a new row
+    const { error } = await supabase.from('user_personalization').insert([
+      {
+        monthly_limit,
+        daily_limit: 0,
+        updated_at: moment.utc().format('YYYY-MM-DD'),
+      },
+    ])
+    if (error) {
+      console.log("ERROR: Couldn't update the user preferences", error)
+      return null
+    }
+
+    return await updateDailyLimit(monthly_limit)
+  }
+
+  // Else send an insert query
+  const { data, error } = await supabase
+    .from('user_personalization')
+    // To get the daily-limit, we divide the monthly-limit by the days left in this month
+    // which gives the average expenditure for each day for this month
+    .update({
+      monthly_limit,
+      daily_limit: 0,
+    })
+    .eq('user_id', user.id)
+    .select()
+
+  if (error) {
+    console.log("ERROR: Couldn't update the user preferences", error)
+    return null
+  }
+
+  return await updateDailyLimit(monthly_limit)
+}
+
+/**
+ * Updates the daily limit with regard to the new date
+ */
+export const updateDailyLimit = async (monthlyLimit: number) => {
+  // The expenditure done by the user this month
+  const expenditureThisMonth = await getExpenseThisMonth()
+
+  if (!expenditureThisMonth) {
+    console.log(
+      "ERROR: Couldn't fetch the expenses this month, aborting updating daily limit",
+    )
+    return null
+  }
+  // Get the total expenditure this month
+  const monthTotalNow = simpleReduce(
+    expenditureThisMonth,
+    'expenditure',
+    (prev, curr) => parseInt(prev as string) + parseInt(curr as string),
+  ).expenditure
+
+  // Days left in this month
+  const daysLeft = daysLeftInThisMonth()
+
+  // Divide the monthly limit by this number
+  const daily_limit = Math.floor(
+    Math.max(0, monthlyLimit - monthTotalNow) / daysLeft,
+  )
+
+  // Create a supabase client
+  const supabase = await createClient()
+
+  // Get the current logged-in user
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    console.log('ERROR: Cannot update preference for a null user')
+    return null
+  }
+
+  // Make the query for updating
+  const { data, error } = await supabase
+    .from('user_personalization')
+    .update({ daily_limit, updated_at: moment.utc().format('YYYY-MM-DD') })
+    .eq('user_id', user.id)
+    .select()
+
+  if (error) {
+    console.log("ERROR: Couldn't update the daily limit for user", error)
+    return null
+  }
+
   return data
 }

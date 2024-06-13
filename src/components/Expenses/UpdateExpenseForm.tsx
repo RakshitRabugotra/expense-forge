@@ -1,20 +1,22 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
+import moment from 'moment'
 
 // Icon dependencies
 import { MdClose } from 'react-icons/md'
 
 // Type definitions
-import { Tables } from '@/types/supabase'
+import type { Tables } from '@/types/supabase'
+import type { ModalOpenButtonProps } from '@/types/modal'
 
 // Internal Dependencies
 import Input from '@/components/Forms/Input'
-import moment from 'moment'
-import SubmitButton from './expense-submit-button'
+import SubmitButton from '@/components/Forms/SubmitButton'
+import BottomModal from '@/components/Modal/BottomModal'
+
+// Custom Actions
 import { deleteExpense, updateExpense } from '@/actions/expenses'
-import BottomModal from '../SlidingModal/BottomModal'
-import { ModalOpenButtonProps } from '@/types/modal'
 
 // Set an alias for expense type
 type Expense = Tables<'expenses'>

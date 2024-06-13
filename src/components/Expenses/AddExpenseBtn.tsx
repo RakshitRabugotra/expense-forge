@@ -1,20 +1,22 @@
 'use client'
 
 import { twMerge } from 'tailwind-merge'
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
+import moment from 'moment'
 
 // Icon dependencies
 import { MdAdd, MdClose } from 'react-icons/md'
 
 // Custom Components
 import Input from '@/components/Forms/Input'
-import moment from 'moment'
-import SubmitButton from './expense-submit-button'
-import BottomModal from '@/components/SlidingModal/BottomModal'
+import SubmitButton from '@/components/Forms/SubmitButton'
+import BottomModal from '@/components/Modal/BottomModal'
 
 // Custom Actions
 import { recordExpense } from '@/actions/expenses'
-import { ModalChildProps, ModalOpenButtonProps } from '@/types/modal'
+
+// Type definitions
+import type { ModalChildProps, ModalOpenButtonProps } from '@/types/modal'
 
 export default function AddExpenseBtn({
   setRefresh,

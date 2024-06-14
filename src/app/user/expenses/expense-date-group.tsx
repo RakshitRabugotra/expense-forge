@@ -11,6 +11,7 @@ import ExpenseItem from '@/components/Expenses/ExpenseItem'
 
 // Custom Utilities
 import { sortByDate } from '@/utils/functions/array'
+import SubHeading from '@/components/SubHeading'
 
 // Alias for the type
 type Expense = Tables<'expenses'>
@@ -34,15 +35,7 @@ export default function ExpenseDateGroup({
 
   return (
     <div>
-      <h2
-        className={twMerge(
-          'my-2 px-2',
-          'font-bold text-black/60',
-          'rounded-md border-l-8 border-leaf-300',
-        )}
-      >
-        {title}
-      </h2>
+      <SubHeading>{title}</SubHeading>
       {sortedExpenses.map((value, index) => (
         <ExpenseItem
           key={index}

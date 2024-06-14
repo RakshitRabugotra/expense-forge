@@ -6,7 +6,7 @@ import { Pie } from 'react-chartjs-2'
 import { twMerge } from 'tailwind-merge'
 
 // Internal Dependencies
-import SubHeading from '@/components/Dashboard/sub-heading'
+import SubHeading from '@/components/SubHeading'
 
 // Custom Actions
 import { getExpensesToday } from '@/actions/stats'

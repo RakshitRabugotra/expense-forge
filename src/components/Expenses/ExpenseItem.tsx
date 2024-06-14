@@ -40,7 +40,8 @@ export default function ExpenseItem({
       className={twMerge(
         'inline-flex w-full items-center justify-between',
         'rounded-lg border shadow-sm',
-        'cursor-pointer select-none',
+        'select-none',
+        onClick ? 'cursor-pointer' : '',
         className,
       )}
     >

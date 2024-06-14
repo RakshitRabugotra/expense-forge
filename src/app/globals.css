@@ -57,7 +57,7 @@
   .pop-up-container-fullscreen {
     @apply select-none;
     @apply fixed z-0;
-    @apply bg-black/90;
+    @apply bg-black;
     @apply inset-0;
     @apply min-h-screen;
     @apply flex items-center justify-center;

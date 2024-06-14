@@ -10,7 +10,7 @@ import {
 import { areRequiredFieldsValid } from '@/utils/functions/user-personalization'
 
 // Custom Components
-import PromptPersonalizations from './PromptPersonalizations'
+import PromptPersonalizations from './prompt-personalizations'
 
 export default async function PersonalizationProtected({
   children,

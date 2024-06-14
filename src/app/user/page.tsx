@@ -5,7 +5,7 @@ import { getUserPersonalizations } from '@/actions/user-personalization'
 // Internal Dependencies
 import PieChart from '@/components/Charts/PieChart'
 import Dashboard from '@/components/Dashboard/Dashboard'
-import SubHeading from '@/components/Dashboard/sub-heading'
+import SubHeading from '@/components/SubHeading'
 import RecentExpenses from '@/components/Expenses/RecentExpenses'
 import InlineHeading from '@/components/InlineHeading'
 import { PROTECTED_URL } from '@/utils/constants'

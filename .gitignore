@@ -3,6 +3,9 @@ sw.*
 workbox-*
 swe-worker-*
 
+# ignore todo files
+todo*
+
 # dependencies
 /node_modules
 /.pnp

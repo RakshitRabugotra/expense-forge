@@ -1,11 +1,13 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useSpring, animated } from '@react-spring/web'
 
 // Custom Components
 import FullScreenModal from '@/components/Modal/FullScreenModal'
 import Input from '@/components/Forms/Input'
 import SubmitButton from '@/components/Forms/SubmitButton'
+import LoadingFallback from '@/components/LoadingFallback'
 
 // Custom Actions
 import { recordUserPersonalizations } from '@/actions/user-personalization'
@@ -37,17 +39,31 @@ export default function PromptPersonalizations({
     }
   }, [done])
 
+  // When we close the form, we need to show the loading
+  const [springs, api] = useSpring(() => ({
+    from: { opacity: 0 },
+  }))
+
   return (
-    <FullScreenModal
-      defaultOpen
-      ChildComponent={(props) => (
-        <PersonalizationForm
-          {...props}
-          invalidFields={invalidFields}
-          setDone={setDone}
-        />
-      )}
-    />
+    <>
+      <FullScreenModal
+        defaultOpen
+        ChildComponent={(props) => (
+          <PersonalizationForm
+            {...props}
+            invalidFields={invalidFields}
+            setDone={setDone}
+          />
+        )}
+        onClose={() => api.start({ from: { opacity: 0 }, to: { opacity: 1 } })}
+      />
+      <animated.div
+        style={springs}
+        className='absolute left-1/2 top-1/2 z-[1] -translate-x-1/2 -translate-y-1/2'
+      >
+        <LoadingFallback text='Saving' />
+      </animated.div>
+    </>
   )
 }
 

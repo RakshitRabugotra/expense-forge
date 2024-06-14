@@ -97,8 +97,6 @@ export default function PieChart({
     [categorizedExp.current],
   )
 
-  console.log('pie data: ', EXPENSE_DATA)
-
   return (
     <>
       <SubHeading>

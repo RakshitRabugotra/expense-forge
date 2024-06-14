@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 // Type definitions
-import { type User } from '@supabase/supabase-js'
 import { type Tables } from '@/types/supabase'
 
 // Custom Actions
@@ -39,8 +38,8 @@ export default function ExpenseList() {
 
   useEffect(() => {
     // Fetch expenses after every 10 seconds
-    getExpenses().then((response) => {
-      setExpenses(response.data)
+    getExpenses().then((value) => {
+      setExpenses(value)
     })
     if (refresh <= 0) return
   }, [refresh])

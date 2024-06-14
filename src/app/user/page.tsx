@@ -1,9 +1,15 @@
+// Custom actions
 import { getUser } from '@/actions/auth'
 import { getUserPersonalizations } from '@/actions/user-personalization'
-import AuthButton from '@/components/Auth/AuthButton'
+
+// Internal Dependencies
 import PieChart from '@/components/Charts/PieChart'
 import Dashboard from '@/components/Dashboard/Dashboard'
+import SubHeading from '@/components/Dashboard/sub-heading'
+import RecentExpenses from '@/components/Expenses/RecentExpenses'
 import InlineHeading from '@/components/InlineHeading'
+import { PROTECTED_URL } from '@/utils/constants'
+import Link from 'next/link'
 
 export default async function ProtectedPage() {
   const {
@@ -31,7 +37,24 @@ export default async function ProtectedPage() {
       <Dashboard className='mb-10' />
       {/* The Pie Chart for analytics */}
       <PieChart dailyLimit={userPreference.daily_limit} className='mb-10' />
-      <AuthButton />
+      <Recent />
     </>
+  )
+}
+
+function Recent() {
+  return (
+    <div className='w-full'>
+      <SubHeading>
+        Recent Transactions{' '}
+        <Link
+          href={`${PROTECTED_URL}/expenses`}
+          className='float-right my-auto inline-block text-sm text-black/50 underline underline-offset-4'
+        >
+          {'See all >'}
+        </Link>
+      </SubHeading>
+      <RecentExpenses limit={5} />
+    </div>
   )
 }

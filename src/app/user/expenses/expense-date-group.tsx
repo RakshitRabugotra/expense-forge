@@ -1,15 +1,15 @@
 'use client'
 
+import { useMemo } from 'react'
+import { twMerge } from 'tailwind-merge'
+
 // Type definitions
 import { Tables } from '@/types/supabase'
 
 // Internal Dependencies
-import ExpenseItem from './expense-item'
+import ExpenseItem from '@/components/Expenses/ExpenseItem'
 
-// Icon dependencies
-import { RiMoneyDollarCircleFill } from 'react-icons/ri'
-import { twMerge } from 'tailwind-merge'
-import { useMemo } from 'react'
+// Custom Utilities
 import { sortByDate } from '@/utils/functions/array'
 
 // Alias for the type
@@ -47,7 +47,6 @@ export default function ExpenseDateGroup({
         <ExpenseItem
           key={index}
           {...value}
-          IconComponent={RiMoneyDollarCircleFill}
           onClick={() => {
             setSelected(value)
             setCount((prev) => prev + 1)

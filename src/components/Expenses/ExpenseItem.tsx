@@ -1,31 +1,47 @@
-import { Tables } from '@/types/supabase'
+import { twMerge } from 'tailwind-merge'
+
+// Custom Utilities
 import {
   compressToUnits,
   currencyFormatterINR,
 } from '@/utils/functions/currency'
-import { IconType } from 'react-icons'
-import { twMerge } from 'tailwind-merge'
+
+// Type definitions
+import type { Tables } from '@/types/supabase'
+import type { IconType } from 'react-icons'
+
+// Icon Dependencies
+import { RiMoneyDollarCircleFill } from 'react-icons/ri'
+import { HTMLElementProps } from '@/types/page-component'
+
+// Decide the icon based on category
+const IconComponent: IconType = (props) => (
+  <RiMoneyDollarCircleFill {...props} />
+)
 
 export default function ExpenseItem({
+  id,
+  className,
+  onClick,
   name,
   category,
   expenditure,
-  IconComponent,
-  onClick,
-}: Tables<'expenses'> & {
-  IconComponent: IconType
-  onClick?: React.MouseEventHandler<HTMLDivElement>
-}) {
+}: Tables<'expenses'> &
+  HTMLElementProps & {
+    onClick?: React.MouseEventHandler<HTMLDivElement>
+  }) {
   // Extract the different components of the expenditure
   const formattedExp = compressToUnits(expenditure, currencyFormatterINR)
 
   return (
     <div
+      id={id}
       onClick={onClick}
       className={twMerge(
         'inline-flex w-full items-center justify-between',
         'rounded-lg border shadow-sm',
         'cursor-pointer select-none',
+        className,
       )}
     >
       {/* Show the icon dynamically */}

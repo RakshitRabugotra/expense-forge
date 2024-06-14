@@ -12,7 +12,38 @@ export const getExpenses = async () => {
   // Create a supabase client
   const supabase = await createClient()
   // Fetch all the expenses related to that id
-  return await supabase.from('expenses').select('*')
+  const { data, error } = await supabase.from('expenses').select('*')
+
+  // If we encounter some error
+  if (error) {
+    console.log('ERROR: while fetching the expenses', error)
+    return null
+  }
+
+  return data
+}
+
+/**
+ *
+ * @param limit The number of records to fetch
+ * @returns first 'limit' number of records in chronological order
+ */
+export const getRecentExpenses = async (limit: number) => {
+  // Create a supabase client
+  const supabase = await createClient()
+  // Fetch all the recent N expenses
+  const { data, error } = await supabase
+    .from('expenses')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(limit)
+  // If we encounter some error
+  if (error) {
+    console.log('ERROR: while fetching the recent expenses', error)
+    return null
+  }
+
+  return data
 }
 
 /**

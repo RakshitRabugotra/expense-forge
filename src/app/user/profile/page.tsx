@@ -4,6 +4,7 @@ import { getUser } from '@/actions/auth'
 // Internal Dependencies
 import Heading from '@/components/Heading'
 import ProfileMenu from './profile-menu'
+import AuthButton from '@/components/Auth/AuthButton'
 
 export default async function ProfilePage() {
   // Fetch the logged-in usr
@@ -25,6 +26,7 @@ export default async function ProfilePage() {
     <>
       <Heading text={'Welcome'} coloredText={(firstName ?? '') as string} />
       <ProfileMenu />
+      <AuthButton />
     </>
   )
 }

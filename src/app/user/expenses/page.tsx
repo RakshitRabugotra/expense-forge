@@ -1,6 +1,3 @@
-// Custom Actions
-import { getUser } from '@/actions/auth'
-
 // Internal Dependencies
 import Heading from '@/components/Heading'
 

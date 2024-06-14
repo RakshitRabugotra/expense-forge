@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 // Custom actions
 import { getUser } from '@/actions/auth'
 import { getUserPersonalizations } from '@/actions/user-personalization'
@@ -8,10 +10,11 @@ import Dashboard from '@/components/Dashboard/Dashboard'
 import SubHeading from '@/components/SubHeading'
 import RecentExpenses from '@/components/Expenses/RecentExpenses'
 import InlineHeading from '@/components/InlineHeading'
-import { PROTECTED_URL } from '@/utils/constants'
-import Link from 'next/link'
 
-export default async function ProtectedPage() {
+// Constant Dependencies
+import { PROTECTED_URL, RECENT_EXPENSES_LIMIT } from '@/utils/constants'
+
+export default async function IndexPage() {
   const {
     data: { user },
   } = await getUser()
@@ -54,7 +57,7 @@ function Recent() {
           {'See all >'}
         </Link>
       </SubHeading>
-      <RecentExpenses limit={5} />
+      <RecentExpenses limit={RECENT_EXPENSES_LIMIT} />
     </div>
   )
 }

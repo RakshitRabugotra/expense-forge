@@ -9,7 +9,11 @@ export const APP_NAME = 'ExpenseForge'
 export const APP_SLOGAN = 'Sculpt Your Finances'
 export const APP_DESCRIPTION =
   "ExpenseForge is your ultimate personal finance companion, designed to help you master your money with ease and confidence. Whether you're looking to track your daily expenses, set and stick to a budget, or plan for future savings, ExpenseForge provides the tools you need to take control of your financial destiny."
+
+/* Constants for the app */
+
 export const PROTECTED_URL = '/user'
+export const RECENT_EXPENSES_LIMIT = 3
 
 // Colors used to categorized expenses in graphs
 export const COLORS = [

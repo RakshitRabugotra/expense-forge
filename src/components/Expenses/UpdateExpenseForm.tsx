@@ -164,7 +164,7 @@ function UpdateExpense({
               if (setRefresh) setRefresh((prev) => ++prev)
               resetMenu()
             }}
-            className='bg-emerald-600/70 hover:bg-emerald-700'
+            className='bg-green-600/70 hover:bg-green-700'
           >
             Update
           </SubmitButton>

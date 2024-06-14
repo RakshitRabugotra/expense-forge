@@ -14,6 +14,7 @@ import {
 
 // Internal Dependencies
 import LoadingFallback from '@/components/LoadingFallback'
+import SubHeading from '@/components/SubHeading'
 
 // Type definitions
 import { Tables } from '@/types/supabase'
@@ -67,14 +68,16 @@ export default function BarChart() {
   /* While the data has not been fetched */
   if (!categorizedExpenses.current || !expThisMonth)
     return (
-      <div>
+      <div className='my-6 flex w-full flex-col gap-6'>
         <LoadingFallback text='Fetching stats' />
       </div>
     )
 
   return (
     <div className='my-6 flex w-full flex-col gap-6'>
-      <p>Bar Chart</p>
+      <SubHeading className='text-base'>
+        {'Let us break it down for you!'}
+      </SubHeading>
       {categorizedExpenses.current.length > 0 ? (
         <Chart groups={categorizedExpenses.current} stats={stats.current} />
       ) : (

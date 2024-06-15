@@ -95,7 +95,8 @@ export const recordUserPersonalizations = async (formData: FormData) => {
     // which gives the average expenditure for each day for this month
     .update({
       monthly_limit,
-      daily_limit: 0,
+      daily_limit: Math.floor(monthly_limit / daysLeftInThisMonth()),
+      updated_at: moment.utc().format('YYYY-MM-DD'),
     })
     .eq('user_id', user.id)
     .select()
@@ -105,7 +106,7 @@ export const recordUserPersonalizations = async (formData: FormData) => {
     return null
   }
 
-  return await updateDailyLimit(monthly_limit)
+  return data
 }
 
 /**

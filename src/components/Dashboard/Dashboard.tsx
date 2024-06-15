@@ -76,10 +76,10 @@ export default function Dashboard({ id, className }: HTMLElementProps) {
           onClick={() => setIsDaily(false)}
           className={twMerge(
             !isDaily
-              ? 'border-b-emerald-500 font-bold text-white/80'
-              : 'border-b-black/10 font-normal text-black/70',
+              ? 'border-b-emerald-500 text-white/80'
+              : 'border-b-black/10 text-black/70',
             'm-2 mx-4 border-b-4 px-2',
-            'transition-all duration-200 ease-in-out',
+            'transition-colors duration-200 ease-in-out',
           )}
         >
           Monthly Tracker
@@ -130,8 +130,7 @@ function ExpenseField({ title, figure, onClick }: ExpenseFieldProps) {
   const { number } = useSpring({
     from: { number: 0 },
     to: { number: figure },
-    delay: 0,
-    config: config.stiff,
+    config: config.default,
   })
 
   return (

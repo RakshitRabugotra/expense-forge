@@ -64,8 +64,8 @@ export default function Dashboard({ id, className }: HTMLElementProps) {
           onClick={() => setIsDaily(true)}
           className={twMerge(
             isDaily
-              ? 'border-b-emerald-500 font-bold text-white/80'
-              : 'border-b-black/10 font-normal text-black/70',
+              ? 'border-b-green-500 font-bold text-white/80'
+              : 'border-b-black/10 font-bold text-black/70',
             'm-2 mx-4 border-b-4 px-2',
             'transition-all duration-200 ease-in-out',
           )}
@@ -76,8 +76,8 @@ export default function Dashboard({ id, className }: HTMLElementProps) {
           onClick={() => setIsDaily(false)}
           className={twMerge(
             !isDaily
-              ? 'border-b-emerald-500 text-white/80'
-              : 'border-b-black/10 text-black/70',
+              ? 'border-b-green-500 font-bold text-white/80'
+              : 'border-b-black/10 font-bold text-black/70',
             'm-2 mx-4 border-b-4 px-2',
             'transition-colors duration-200 ease-in-out',
           )}

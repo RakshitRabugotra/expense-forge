@@ -120,7 +120,11 @@ export default function DoughnutChart({
         )}
       >
         <section className='relative flex w-full flex-col items-center justify-center p-4'>
-          <Doughnut data={EXPENSE_DATA} options={CHART_OPTIONS} />
+          <Doughnut
+            data={EXPENSE_DATA}
+            options={CHART_OPTIONS}
+            fallbackContent={<LoadingFallback text='compiling expenses' />}
+          />
           <ChartStats
             isPending={categorizedExp.current === null}
             dailyLimit={dailyLimit}
@@ -146,13 +150,13 @@ function ChartStats({
   dailyLimitPercent: string
 }) {
   const [springs, api] = useSpring(() => ({
-    from: { opacity: 0 },
+    from: { opacity: 0, width: '30%' },
   }))
 
   if (!isPending) {
     api.start({
-      from: { opacity: 0 },
-      to: { opacity: 1 },
+      from: { opacity: 0, width: '30%' },
+      to: { opacity: 1, width: '60%' },
     })
   }
 

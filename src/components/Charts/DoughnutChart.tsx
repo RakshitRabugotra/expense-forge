@@ -119,12 +119,7 @@ export default function DoughnutChart({
         )}
       >
         <section className='relative flex w-full flex-col items-center justify-center p-4'>
-          {
-            /* Show the chart when we're done loading */
-            categorizedExp.current !== null && (
-              <Doughnut data={EXPENSE_DATA} options={CHART_OPTIONS} />
-            )
-          }
+          <Doughnut data={EXPENSE_DATA} options={CHART_OPTIONS} />
           <ChartStats
             isPending={categorizedExp.current === null}
             dailyLimit={dailyLimit}

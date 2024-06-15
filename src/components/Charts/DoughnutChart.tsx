@@ -121,7 +121,6 @@ export default function DoughnutChart({
         <section className='relative flex w-full flex-col items-center justify-center p-4'>
           <Doughnut data={EXPENSE_DATA} options={CHART_OPTIONS} />
           <ChartStats
-            isPending={categorizedExp.current === null}
             dailyLimit={dailyLimit}
             dailyLimitPercent={dailyLimitExpenditurePercent}
           />
@@ -136,18 +135,12 @@ export default function DoughnutChart({
 }
 
 function ChartStats({
-  isPending,
   dailyLimit,
   dailyLimitPercent,
 }: {
-  isPending: boolean
   dailyLimit: number
   dailyLimitPercent: string
 }) {
-  if (isPending) {
-    return <LoadingFallback text='compiling expenses' className='text-white' />
-  }
-
   return (
     <div
       className={twMerge(

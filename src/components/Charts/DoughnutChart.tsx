@@ -1,9 +1,11 @@
 'use client'
 
+import Link from 'next/link'
 import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Doughnut, Pie } from 'react-chartjs-2'
+import { Doughnut } from 'react-chartjs-2'
 import { twMerge } from 'tailwind-merge'
+import { useSpring, animated } from '@react-spring/web'
 
 // Internal Dependencies
 import SubHeading from '@/components/SubHeading'
@@ -29,7 +31,6 @@ import { simpleReduce } from '@/utils/functions/array'
 
 // Constant dependencies
 import { COLORS, PROTECTED_URL } from '@/utils/constants'
-import Link from 'next/link'
 
 ChartJS.register(ArcElement, Tooltip)
 
@@ -121,6 +122,7 @@ export default function DoughnutChart({
         <section className='relative flex w-full flex-col items-center justify-center p-4'>
           <Doughnut data={EXPENSE_DATA} options={CHART_OPTIONS} />
           <ChartStats
+            isPending={categorizedExp.current === null}
             dailyLimit={dailyLimit}
             dailyLimitPercent={dailyLimitExpenditurePercent}
           />
@@ -135,14 +137,27 @@ export default function DoughnutChart({
 }
 
 function ChartStats({
+  isPending,
   dailyLimit,
   dailyLimitPercent,
 }: {
+  isPending: boolean
   dailyLimit: number
   dailyLimitPercent: string
 }) {
+  const [springs, api] = useSpring(() => ({
+    from: { opacity: 0 },
+  }))
+
+  if (!isPending) {
+    api.start({
+      from: { opacity: 0 },
+      to: { opacity: 1 },
+    })
+  }
+
   return (
-    <div
+    <animated.div
       className={twMerge(
         'absolute left-0 right-0 top-1/2 -translate-y-1/2',
         'mx-auto aspect-square min-w-0 max-w-[60%] rounded-full',
@@ -150,6 +165,7 @@ function ChartStats({
         'text-center text-base font-medium text-leaf-200',
         'flex flex-col items-center justify-center gap-2',
       )}
+      style={springs}
     >
       {/* Calculate the daily expense percentage, based on the limit */}
       <h4 className='text-[32px]'>{dailyLimitPercent}</h4>
@@ -158,7 +174,7 @@ function ChartStats({
       <h4 className='text-[32px]'>
         {compressToUnits(dailyLimit, currencyFormatterINR, 2)}
       </h4>
-    </div>
+    </animated.div>
   )
 }
 

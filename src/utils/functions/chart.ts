@@ -24,7 +24,7 @@ export const getPieChartData = (
   categorizedExpenses: CategorizedExpenses[] | null,
 ) => {
   // If the categorized expenses are null, the show no data found
-  if (!categorizedExpenses) {
+  if (!categorizedExpenses || categorizedExpenses.length === 0) {
     return {
       labels: ['No Expense'],
       datasets: [

@@ -36,7 +36,7 @@ export const getExpensesToday = async () => {
     return null
   }
   // Else, return the data
-  return data.length > 0 ? data : null
+  return data
 }
 
 export const getExpenseThisMonth = async () => {

@@ -5,7 +5,7 @@ import { getUser } from '@/actions/auth'
 import { getUserPersonalizations } from '@/actions/user-personalization'
 
 // Internal Dependencies
-import PieChart from '@/components/Charts/PieChart'
+import DoughnutChart from '@/components/Charts/DoughnutChart'
 import Dashboard from '@/components/Dashboard/Dashboard'
 import SubHeading from '@/components/SubHeading'
 import RecentExpenses from '@/components/Expenses/RecentExpenses'
@@ -38,8 +38,11 @@ export default async function IndexPage() {
       />
       {/* Show the dashboard */}
       <Dashboard className='mb-10' />
-      {/* The Pie Chart for analytics */}
-      <PieChart dailyLimit={userPreference.daily_limit} className='mb-10' />
+      {/* The Doughnut Chart for analytics */}
+      <DoughnutChart
+        dailyLimit={userPreference.daily_limit}
+        className='mb-10'
+      />
       <Recent />
     </>
   )

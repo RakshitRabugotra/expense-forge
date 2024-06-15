@@ -2,11 +2,12 @@
 
 import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Pie } from 'react-chartjs-2'
+import { Doughnut, Pie } from 'react-chartjs-2'
 import { twMerge } from 'tailwind-merge'
 
 // Internal Dependencies
 import SubHeading from '@/components/SubHeading'
+import LoadingFallback from '../LoadingFallback'
 
 // Custom Actions
 import { getExpensesToday } from '@/actions/stats'
@@ -45,7 +46,7 @@ const CHART_OPTIONS = {
 // Alias for the expense entry type
 type Expense = Tables<'expenses'>
 
-export default function PieChart({
+export default function DoughnutChart({
   id,
   className,
   dailyLimit,
@@ -61,6 +62,8 @@ export default function PieChart({
   useEffect(() => {
     getExpensesToday().then((value) => setExpenses(value))
   }, [])
+
+  console.log({ expenses })
 
   // Set the categorized expenses
   categorizedExp.current = useMemo(
@@ -116,24 +119,17 @@ export default function PieChart({
         )}
       >
         <section className='relative flex w-full flex-col items-center justify-center p-4'>
-          <Pie data={EXPENSE_DATA} options={CHART_OPTIONS} />
-          <div
-            className={twMerge(
-              'absolute left-0 right-0 top-1/2 -translate-y-1/2',
-              'mx-auto aspect-square min-w-0 max-w-[60%] rounded-full',
-              'bg-foreground',
-              'text-center text-base font-medium text-leaf-200',
-              'flex flex-col items-center justify-center gap-2',
-            )}
-          >
-            {/* Calculate the daily expense percentage, based on the limit */}
-            <h4 className='text-[32px]'>{dailyLimitExpenditurePercent}</h4>
-
-            <div>of daily limit</div>
-            <h4 className='text-[32px]'>
-              {compressToUnits(dailyLimit, currencyFormatterINR, 2)}
-            </h4>
-          </div>
+          {
+            /* Show the chart when we're done loading */
+            categorizedExp.current !== null && (
+              <Doughnut data={EXPENSE_DATA} options={CHART_OPTIONS} />
+            )
+          }
+          <ChartStats
+            isPending={categorizedExp.current === null}
+            dailyLimit={dailyLimit}
+            dailyLimitPercent={dailyLimitExpenditurePercent}
+          />
         </section>
         <PieChartLegends
           total={dailyTotal.current}
@@ -141,6 +137,40 @@ export default function PieChart({
         />
       </article>
     </>
+  )
+}
+
+function ChartStats({
+  isPending,
+  dailyLimit,
+  dailyLimitPercent,
+}: {
+  isPending: boolean
+  dailyLimit: number
+  dailyLimitPercent: string
+}) {
+  if (isPending) {
+    return <LoadingFallback text='compiling expenses' className='text-white' />
+  }
+
+  return (
+    <div
+      className={twMerge(
+        'absolute left-0 right-0 top-1/2 -translate-y-1/2',
+        'mx-auto aspect-square min-w-0 max-w-[60%] rounded-full',
+        'bg-foreground',
+        'text-center text-base font-medium text-leaf-200',
+        'flex flex-col items-center justify-center gap-2',
+      )}
+    >
+      {/* Calculate the daily expense percentage, based on the limit */}
+      <h4 className='text-[32px]'>{dailyLimitPercent}</h4>
+
+      <div>of daily limit</div>
+      <h4 className='text-[32px]'>
+        {compressToUnits(dailyLimit, currencyFormatterINR, 2)}
+      </h4>
+    </div>
   )
 }
 

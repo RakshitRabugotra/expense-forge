@@ -1,8 +1,23 @@
-export default function LoadingFallback({ text }: { text?: string }) {
+import { ComponentProps } from 'react'
+import { twMerge } from 'tailwind-merge'
+
+export default function LoadingFallback({
+  text,
+  className,
+  ...props
+}: { text?: string } & ComponentProps<'div'>) {
   return (
-    <div className='m-auto flex max-w-fit flex-row items-center justify-between gap-2 p-2'>
+    <div
+      className={twMerge(
+        'flex flex-row items-center justify-between gap-2',
+        'm-auto p-2',
+        'max-w-fit',
+        className,
+      )}
+      {...props}
+    >
       <div className='loader'></div>
-      <p>{text}</p>
+      <p className='capitalize'>{text}</p>
     </div>
   )
 }

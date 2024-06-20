@@ -99,7 +99,7 @@ function Chart({
   stats: { max: number; total: number }
 }) {
   return (
-    <div className='flex flex-col justify-between rounded-lg bg-black/70 p-2'>
+    <div className='flex flex-col justify-between rounded-xl bg-black/90 p-2 backdrop-blur-md'>
       {groups.map((value, index) => {
         // Get the maximum expense, and set the bars according to it
 
@@ -139,17 +139,29 @@ function Bar({
   }))
 
   return (
+    // The width and the bar of the chart
     <animated.span
       style={springs}
       ref={ref}
       className={twMerge(
+        'relative',
         'overflow-visible text-nowrap',
-        'font-medium capitalize text-white/80',
+        'capitalize text-white/80',
         'px-2 py-1',
-        'my-1',
+        'my-3 min-h-6',
       )}
     >
-      {title + ' - ' + grossPercentage.toFixed(2) + '%'}
+      <span
+        className={twMerge(
+          'absolute top-0 -translate-y-1/2',
+          'rounded-full border border-black/40',
+          'px-2',
+          `bg-black/40 text-white/80 backdrop-blur-md`,
+          'font-light',
+        )}
+      >
+        {title + ' - ' + grossPercentage.toFixed(2) + '%'}
+      </span>
     </animated.span>
   )
 }

@@ -49,9 +49,9 @@ export default function ExpenseItem({
       <IconComponent className='w-[20%] rounded-lg p-2 text-5xl' />
 
       <div className='w-[60%]'>
-        {name && <h4 className='text-wrap text-xl'>{name}</h4>}
+        {name && <h4 className='text-wrap text-xl capitalize'>{name}</h4>}
         {category && (
-          <div className='text-wrap text-xs font-medium capitalize leading-6 text-inactive'>
+          <div className='text-wrap text-xs font-medium leading-6 text-inactive'>
             {category}
           </div>
         )}

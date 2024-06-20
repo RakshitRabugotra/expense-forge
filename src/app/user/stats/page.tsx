@@ -1,6 +1,6 @@
 import BarChart from '@/components/Charts/BarChart'
+import DuoGaugeChart from '@/components/Charts/DuoGaugeChart'
 import Heading from '@/components/Heading'
-import { Daily } from './expenditure-dash'
 import SubHeading from '@/components/SubHeading'
 
 export default function StatsPage() {
@@ -17,7 +17,7 @@ function Dashboard() {
   return (
     <div className='w-full'>
       <SubHeading>Dashboard</SubHeading>
-      <Daily />
+      <DuoGaugeChart />
     </div>
   )
 }

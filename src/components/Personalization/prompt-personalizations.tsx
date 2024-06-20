@@ -13,7 +13,7 @@ import LoadingFallback from '@/components/LoadingFallback'
 import { recordUserPersonalizations } from '@/actions/user-personalization'
 
 // Constants Dependencies
-import { PERSONALIZATION_FIELDS_INPUTS, PROTECTED_URL } from '@/utils/constants'
+import { PERSONALIZATION_FIELDS_INPUTS } from '@/utils/constants'
 
 // Type definitions
 import type { Tables } from '@/types/supabase'
@@ -115,7 +115,6 @@ function PersonalizationForm({
         <SubmitButton
           formAction={recordUserPersonalizations}
           onChange={() => {
-            console.log('changed!')
             resetMenu()
           }}
         >

@@ -30,7 +30,8 @@ import { getPieChartData } from '@/utils/functions/chart'
 import { simpleReduce } from '@/utils/functions/array'
 
 // Constant dependencies
-import { COLORS, PROTECTED_URL } from '@/utils/constants'
+import { PROTECTED_URL } from '@/utils/constants'
+import { COLORS } from '@/utils/functions/chroma'
 
 ChartJS.register(ArcElement, Tooltip)
 
@@ -64,8 +65,6 @@ export default function DoughnutChart({
     getExpensesToday().then((value) => setExpenses(value))
   }, [])
 
-  console.log({ expenses })
-
   // Set the categorized expenses
   categorizedExp.current = useMemo(
     () => (expenses ? reduceCategorizedExpenses(expenses) : null),
@@ -87,7 +86,6 @@ export default function DoughnutChart({
 
   /* The percentage of daily limit used by the user */
   const dailyLimitExpenditurePercent = useMemo(() => {
-    console.log('daily total: ', dailyTotal.current)
     let number = 0
     if (dailyTotal.current !== 0 && dailyLimit) {
       number = (dailyTotal.current * 100) / dailyLimit

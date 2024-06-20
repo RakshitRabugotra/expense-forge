@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useInView, animated } from '@react-spring/web'
 
@@ -11,17 +12,19 @@ import {
   CategorizedExpenses,
   reduceCategorizedExpenses,
 } from '@/utils/functions/expenses'
+import { COLORS } from '@/utils/functions/chroma'
 
 // Internal Dependencies
-import LoadingFallback from '@/components/LoadingFallback'
 import SubHeading from '@/components/SubHeading'
 
 // Type definitions
 import { Tables } from '@/types/supabase'
 
 // Content Dependencies
-import { COLORS } from '@/utils/constants'
 import { simpleReduce } from '@/utils/functions/array'
+import { twMerge } from 'tailwind-merge'
+import Link from 'next/link'
+import { PROTECTED_URL } from '@/utils/constants'
 
 type Expense = Tables<'expenses'>
 
@@ -65,23 +68,26 @@ export default function BarChart() {
     [categorizedExpenses.current],
   )
 
-  /* While the data has not been fetched */
-  if (!categorizedExpenses.current || !expThisMonth)
-    return (
-      <div className='my-6 flex w-full flex-col gap-6'>
-        <LoadingFallback text='Fetching stats' />
-      </div>
-    )
-
   return (
     <div className='my-6 flex w-full flex-col gap-6'>
       <SubHeading className='text-base'>
         {'Let us break it down for you!'}
       </SubHeading>
-      {categorizedExpenses.current.length > 0 ? (
+      {!categorizedExpenses.current || !expThisMonth ? (
+        <Image
+          src={'/breakdance-cat-electronic-jazz.gif'}
+          layout={'responsive'}
+          height={132}
+          width={132}
+          alt={`A cute animal!`}
+          unoptimized={true}
+        />
+      ) : categorizedExpenses.current.length > 0 ? (
         <Chart groups={categorizedExpenses.current} stats={stats.current} />
       ) : (
-        <div>No Expenses till now...</div>
+        <p className='animate-in px-2 font-medium text-black/60'>
+          No Expenses till now...
+        </p>
       )}
     </div>
   )
@@ -105,7 +111,7 @@ function Chart({
             title={value.category}
             maxWidthPercentage={100 * (value.total / stats.max)}
             grossPercentage={100 * (value.total / stats.total)}
-            index={index}
+            color={COLORS[index]}
           />
         )
       })}
@@ -117,12 +123,12 @@ function Bar({
   title,
   maxWidthPercentage,
   grossPercentage,
-  index,
+  color,
 }: {
   title: string
   maxWidthPercentage: number
   grossPercentage: number
-  index: number
+  color: string
 }) {
   // Make use of animations to animate this in,
   const [ref, springs] = useInView(() => ({
@@ -130,7 +136,7 @@ function Bar({
     to: {
       width: maxWidthPercentage.toFixed(2) + '%',
       opacity: 1,
-      backgroundColor: COLORS[index],
+      backgroundColor: color,
     },
   }))
 
@@ -138,7 +144,12 @@ function Bar({
     <animated.span
       style={springs}
       ref={ref}
-      className='overflow-visible text-nowrap text-black'
+      className={twMerge(
+        'overflow-visible text-nowrap',
+        'font-bold text-black',
+        'px-2 py-1',
+        'my-1',
+      )}
     >
       {title + ' - ' + grossPercentage.toFixed(2) + '%'}
     </animated.span>

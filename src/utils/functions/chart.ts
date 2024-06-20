@@ -1,8 +1,8 @@
 /* Utilities for chart data processing */
 
 // Constant Dependencies
-import { COLORS } from '@/utils/constants'
 import { CategorizedExpenses } from './expenses'
+import { generateColors } from './chroma'
 
 // Type definition for the data type in expense pie chart
 export type ExpensePieData = {
@@ -30,7 +30,7 @@ export const getPieChartData = (
       datasets: [
         {
           data: [100],
-          backgroundColor: COLORS.slice(-1),
+          backgroundColor: generateColors(1),
         },
       ],
     } as ExpensePieData
@@ -47,7 +47,9 @@ export const getPieChartData = (
           ? categorizedExpenses.map((value) => value.total)
           : [100],
         backgroundColor:
-          categorizedExpenses.length === 0 ? COLORS.slice(-1) : COLORS,
+          categorizedExpenses.length === 0
+            ? generateColors(1)
+            : generateColors(categorizedExpenses.length),
       },
     ],
   } as ExpensePieData

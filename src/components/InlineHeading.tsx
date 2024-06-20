@@ -1,3 +1,4 @@
+import { HTMLElementProps } from '@/types/page-component'
 import { twMerge } from 'tailwind-merge'
 
 export default function InlineHeading({
@@ -6,17 +7,15 @@ export default function InlineHeading({
   text,
   coloredText,
 }: {
-  id?: string
-  className?: string
   text: string
   coloredText?: string
-}) {
+} & HTMLElementProps) {
   return (
     <h1
       id={id}
       className={twMerge(
-        className,
         'w-full text-left text-3xl font-medium text-leaf-950',
+        className,
       )}
     >
       {text}

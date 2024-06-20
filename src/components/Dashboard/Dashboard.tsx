@@ -49,8 +49,6 @@ export default function Dashboard({ id, className }: HTMLElementProps) {
     })
   }, [])
 
-  console.log({ monthlyGoal })
-
   return (
     <section
       id={id}

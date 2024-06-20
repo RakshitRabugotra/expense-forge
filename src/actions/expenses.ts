@@ -56,8 +56,8 @@ export const recordExpense = async (formData: FormData) => {
   const supabase = await createClient()
 
   // Extract the information
-  const name = formData.get('expense-name') as string
-  const category = formData.get('expense-category') as string
+  const name = (formData.get('expense-name') as string).toLowerCase()
+  const category = (formData.get('expense-category') as string).toLowerCase()
   const date = formData.get('expense-date') as string
   const expenditure = parseInt(formData.get('expense-expenditure') as string)
 
@@ -81,8 +81,8 @@ export const updateExpense = async (formData: FormData, id: string) => {
   // Create a supabase client
   const supabase = await createClient()
   // Extract the fields
-  const name = formData.get('expense-name') as string
-  const category = formData.get('expense-category') as string
+  const name = (formData.get('expense-name') as string).toLowerCase()
+  const category = (formData.get('expense-category') as string).toLowerCase()
   const date = formData.get('expense-date') as string
   const expenditure = parseInt(formData.get('expense-expenditure') as string)
 

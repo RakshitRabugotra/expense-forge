@@ -23,8 +23,6 @@ import { Tables } from '@/types/supabase'
 // Content Dependencies
 import { simpleReduce } from '@/utils/functions/array'
 import { twMerge } from 'tailwind-merge'
-import Link from 'next/link'
-import { PROTECTED_URL } from '@/utils/constants'
 
 type Expense = Tables<'expenses'>
 
@@ -69,7 +67,7 @@ export default function BarChart() {
   )
 
   return (
-    <div className='my-6 flex w-full flex-col gap-6'>
+    <div className='my-6 flex w-full flex-col gap-2'>
       <SubHeading className='text-base'>
         {'Let us break it down for you!'}
       </SubHeading>
@@ -101,7 +99,7 @@ function Chart({
   stats: { max: number; total: number }
 }) {
   return (
-    <div className='flex flex-col justify-between'>
+    <div className='flex flex-col justify-between rounded-lg bg-black/70 p-2'>
       {groups.map((value, index) => {
         // Get the maximum expense, and set the bars according to it
 
@@ -146,7 +144,7 @@ function Bar({
       ref={ref}
       className={twMerge(
         'overflow-visible text-nowrap',
-        'font-bold text-black',
+        'font-medium capitalize text-white/80',
         'px-2 py-1',
         'my-1',
       )}

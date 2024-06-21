@@ -39,6 +39,55 @@ export const generateColors = (colorNum: number) => {
   return newColors
 }
 
+interface RGBColor {
+  r: number
+  g: number
+  b: number
+}
+
+interface RGBAColor extends RGBColor {
+  a: number
+}
+
+/**
+ * Interpolates the color in linear-RGB space
+ * @param a The color to start from
+ * @param b The color to end with
+ * @param t The interpolation factor between [0, 1]
+ * @returns The color interpolated between 'a' and 'b'
+ */
+export const lerpRGB = (a: RGBColor, b: RGBColor, t: number) => {
+  return {
+    r: a.r + (b.r - a.r) * t,
+    g: a.g + (b.g - a.g) * t,
+    b: a.b + (b.b - a.b) * t,
+  }
+}
+
+export const interpolateGreen2Red = (parameter: number) => {
+  // Colors to interpolate between
+  const COLORS = {
+    green: { r: 0, g: 132, b: 80 } /* Pastel Green */ as RGBColor,
+    yellow: { r: 239, g: 183, b: 0 } /* Yellow */ as RGBColor,
+    red: { r: 84, g: 29, b: 19 } /* Red */ as RGBColor,
+  }
+
+  let rgbColor = null
+  // If the parameter is less than 0.5, interpolate between green and yellow
+  if (parameter < 0.5) {
+    rgbColor = lerpRGB(COLORS.green, COLORS.yellow, parameter * 2)
+  }
+  // If the parameter is more than 0.5, interpolate between yellow and red
+  else {
+    rgbColor = lerpRGB(COLORS.yellow, COLORS.red, (parameter - 0.5) * 2)
+  }
+
+  // Destructure the color
+  const { r, g, b } = rgbColor
+  // Return the color coded in hex
+  return rgb2hex(r, g, b)
+}
+
 /**
  * Converts HSL to RGB,
  * source: https://www.30secondsofcode.org/js/s/rgb-hex-hsl-hsb-color-format-conversion/#hsl-to-rgb
@@ -83,5 +132,3 @@ export const hsl2hex = (h: number, s: number, l: number) => {
  * COLORS used to categorize the expenses
  */
 export const COLORS = generateColors(10)
-
-console.log({ COLORS })

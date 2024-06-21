@@ -27,6 +27,12 @@
 }
 
 @layer components {
+  .glass {
+    background: linear-gradient(110deg, #fefeffcc, #002e0001);
+    @apply border-2 border-gray-400/50;
+    @apply shadow-md backdrop-blur-md;
+  }
+
   .active-link {
     background: linear-gradient(
       to right bottom,
@@ -109,7 +115,7 @@
   --g: radial-gradient(
       farthest-side,
       #0000 calc(95% - 3px),
-      #fff calc(100% - 3px) 98%,
+      #78946144 calc(100% - 3px) 98%,
       #0000 101%
     )
     no-repeat;

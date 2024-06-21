@@ -2,16 +2,15 @@
 
 import { useEffect, useMemo, useState } from 'react'
 
+// Internal Dependencies
+import SubHeading from '@/components/SubHeading'
+
 // Custom Actions
 import { getExpenseThisMonth, getExpensesToday } from '@/actions/stats'
 import { getUserPersonalizations } from '@/actions/user-personalization'
 
 // Custom Utility function
 import { reduceExpenses } from '@/utils/functions/expenses'
-import {
-  compressToUnits,
-  currencyFormatterINR,
-} from '@/utils/functions/currency'
 
 // Type definitions
 import type { Tables } from '@/types/supabase'
@@ -31,14 +30,17 @@ export default function DuoGaugeChart() {
   }, [])
 
   return (
-    <section id='expense-gauge' className='flex w-full flex-row gap-6'>
-      <DailyTotalGauge
-        dailyLimit={preferences ? preferences.daily_limit : null}
-      />
-      <MonthlyTotalGauge
-        monthlyLimit={preferences ? preferences.monthly_limit : null}
-      />
-    </section>
+    <div className='w-full'>
+      <SubHeading>{'These are your limits!'}</SubHeading>
+      <section id='expense-gauge' className='flex w-full flex-row gap-6'>
+        <DailyTotalGauge
+          dailyLimit={preferences ? preferences.daily_limit : null}
+        />
+        <MonthlyTotalGauge
+          monthlyLimit={preferences ? preferences.monthly_limit : null}
+        />
+      </section>
+    </div>
   )
 }
 
@@ -67,8 +69,9 @@ function DailyTotalGauge({ dailyLimit }: { dailyLimit: number | null }) {
   return (
     <Gauge
       id='daily-gauge'
+      title='DAILY LIMIT'
       ratio={dailyTotal2LimitRatio}
-      text={compressToUnits(dailyTotal, currencyFormatterINR, 2)}
+      text={(dailyTotal2LimitRatio * 100).toFixed(2) + '%'}
     />
   )
 }
@@ -99,32 +102,32 @@ function MonthlyTotalGauge({ monthlyLimit }: { monthlyLimit: number | null }) {
   return (
     <Gauge
       id='monthly-gauge'
+      title='MONTHLY LIMIT'
       ratio={monthlyTotal2LimitRatio}
-      text={compressToUnits(monthlyTotal, currencyFormatterINR, 2)}
-      stringFormatter={(text) =>
-        `${text} | ${(monthlyTotal2LimitRatio * 100).toFixed(2)}% spent`
-      }
+      text={(monthlyTotal2LimitRatio * 100).toFixed(2) + '%'}
     />
   )
 }
 
 function Gauge({
-  text,
-  stringFormatter,
+  title,
   ...props
 }: {
   id?: string
   ratio: number
+  title: string
   text: string
-  stringFormatter?: (value: string) => string
 }) {
   return (
-    <DoughnutGaugeChart
-      {...props}
-      text={stringFormatter ? stringFormatter(text) : text}
-      className='my-2 w-[30%] basis-1/2 rounded-xl bg-black'
-      isPending={false}
-      textClassName={'text-lg'}
-    />
+    <div className='glass my-2 w-[30%] basis-1/2 rounded-xl bg-black/15'>
+      <DoughnutGaugeChart
+        {...props}
+        isPending={false}
+        textClassName={'text-lg'}
+      />
+      <h2 className='my-1 w-full text-center font-bold uppercase text-black/80'>
+        {title}
+      </h2>
+    </div>
   )
 }

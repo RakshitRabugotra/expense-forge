@@ -113,7 +113,7 @@ export default function DoughnutChart({
       <article
         id={id}
         className={twMerge(
-          'flex w-full flex-col rounded-xl bg-black/70',
+          'glass flex w-full flex-col rounded-xl bg-black/10',
           className,
         )}
       >
@@ -215,15 +215,18 @@ function PieChartLegends({
         const legendName = pair[0]
         return (
           <div
-            className='inline-flex w-full items-center justify-start gap-4 p-2 text-base capitalize text-white/90'
+            className='my-1 inline-flex w-full items-center justify-start gap-4 p-2 text-base capitalize text-black/90'
             key={index}
           >
             <div
               className='h-6 w-6 rounded-lg'
               style={{ backgroundColor: color }}
-            ></div>
+            />
             <div className='grow'>{legendName}</div>
-            <div className='text-base font-medium' style={{ color: color }}>
+            <div
+              className='rounded-full bg-black px-2 py-1 text-sm font-medium'
+              style={{ color: color }}
+            >
               {part}
             </div>
           </div>

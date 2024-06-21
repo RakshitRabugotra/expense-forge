@@ -41,6 +41,7 @@ export default function ExpenseItem({
         'inline-flex w-full items-center justify-between',
         'rounded-lg border shadow-sm',
         'select-none',
+        'shadow-sm backdrop-blur-md',
         onClick ? 'cursor-pointer' : '',
         className,
       )}

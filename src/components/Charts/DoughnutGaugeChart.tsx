@@ -1,10 +1,10 @@
 'use client'
 
 import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo } from 'react'
+import { useSpring, animated } from '@react-spring/web'
 import { Doughnut } from 'react-chartjs-2'
 import { twMerge } from 'tailwind-merge'
-import { useSpring, animated } from '@react-spring/web'
 
 // Internal Dependencies
 import LoadingFallback from '../LoadingFallback'
@@ -12,7 +12,10 @@ import LoadingFallback from '../LoadingFallback'
 // Type definitions
 import type { ExpensePieData } from '@/utils/functions/chart'
 import type { HTMLElementProps } from '@/types/page-component'
-import { clamp } from '@/utils/functions/math'
+
+// Custom utilities
+import { lconv } from '@/utils/functions/math'
+import { interpolateGreen2Red } from '@/utils/functions/chroma'
 
 ChartJS.register(ArcElement, Tooltip)
 
@@ -31,11 +34,13 @@ export default function DoughnutGaugeChart({
   className,
   textClassName,
   text,
+
   isPending,
   ratio,
 }: HTMLElementProps & {
   textClassName: string
   text: string
+
   isPending: boolean
   ratio: number
 }) {
@@ -48,22 +53,33 @@ export default function DoughnutGaugeChart({
           {
             data: [
               20,
-              clamp(100 * ratio, 0, 80),
-              clamp(100 * (1 - ratio), 0, 80),
+              Math.round(
+                100 * lconv(ratio, { min: 0, max: 1 }, { min: 0, max: 0.8 }),
+              ),
+              Math.round(
+                100 *
+                  lconv(1 - ratio, { min: 0, max: 1 }, { min: 0, max: 0.8 }),
+              ),
               20,
             ],
-            backgroundColor: ['#000', '#0f0', '#ddd', '#000'],
+            backgroundColor: [
+              '#00000000',
+              interpolateGreen2Red(ratio),
+              '#ddd',
+              '#00000000',
+            ],
           },
         ],
       }) as ExpensePieData,
-    [],
+    [ratio],
   )
 
   return (
     <section
       id={id}
       className={twMerge(
-        'relative flex flex-col items-center justify-center p-4',
+        'relative',
+        'flex flex-col items-center justify-center p-4',
         className,
       )}
     >

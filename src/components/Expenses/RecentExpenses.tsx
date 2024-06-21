@@ -11,6 +11,7 @@ import { getRecentExpenses } from '@/actions/expenses'
 // Internal Dependencies
 import LoadingFallback from '../LoadingFallback'
 import ExpenseItem from './ExpenseItem'
+import { twMerge } from 'tailwind-merge'
 
 type Expense = Tables<'expenses'>
 
@@ -37,7 +38,11 @@ export default function RecentExpenses({ limit }: { limit: number }) {
       {expenses.map((expense, index) => (
         <div
           key={index}
-          className='my-1 inline-flex w-full overflow-hidden rounded-xl border'
+          className={twMerge(
+            'my-1 inline-flex w-full overflow-hidden',
+            'rounded-xl border',
+            'shadow-sm',
+          )}
         >
           <ExpenseDate date={expense.expense_date} />
           <ExpenseItem {...expense} className='grow rounded-none' />
@@ -54,7 +59,7 @@ function ExpenseDate({ date }: { date: string }) {
   monthDate.setMonth(parseInt(month))
 
   return (
-    <div className='flex min-w-[15%] flex-col items-center justify-center border bg-leaf-800/80 p-2 text-white'>
+    <div className='flex min-w-[15%] flex-col items-center justify-center border bg-leaf-950 p-2 text-white'>
       <span>{day}</span>
       <span>{monthDate.toLocaleString('en-IN', { month: 'short' })}</span>
     </div>

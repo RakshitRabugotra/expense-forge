@@ -53,7 +53,7 @@ export default function Dashboard({ id, className }: HTMLElementProps) {
     <section
       id={id}
       className={twMerge(
-        'flex min-h-[25vh] w-full flex-col rounded-xl border bg-black/70 p-3',
+        'glass flex min-h-[25vh] w-full flex-col rounded-xl border bg-black/10 p-3',
         className,
       )}
     >
@@ -62,7 +62,7 @@ export default function Dashboard({ id, className }: HTMLElementProps) {
           onClick={() => setIsDaily(true)}
           className={twMerge(
             isDaily
-              ? 'border-b-green-500 font-bold text-white/80'
+              ? 'border-b-green-500 font-bold text-green-600/80'
               : 'border-b-black/10 font-bold text-black/70',
             'm-2 mx-4 border-b-4 px-2',
             'transition-all duration-200 ease-in-out',
@@ -74,7 +74,7 @@ export default function Dashboard({ id, className }: HTMLElementProps) {
           onClick={() => setIsDaily(false)}
           className={twMerge(
             !isDaily
-              ? 'border-b-green-500 font-bold text-white/80'
+              ? 'border-b-green-500 font-bold text-green-600/80'
               : 'border-b-black/10 font-bold text-black/70',
             'm-2 mx-4 border-b-4 px-2',
             'transition-colors duration-200 ease-in-out',
@@ -109,7 +109,7 @@ function Dash({
 }) {
   return (
     <>
-      <fieldset className='flex w-full grow flex-row rounded-xl bg-foreground'>
+      <fieldset className='flex w-full grow flex-row rounded-xl bg-black/75 backdrop-blur-md'>
         <ExpenseField {...current} />
         <ExpenseField {...goal} />
       </fieldset>

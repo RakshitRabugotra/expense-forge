@@ -67,9 +67,9 @@ export const lerpRGB = (a: RGBColor, b: RGBColor, t: number) => {
 export const interpolateGreen2Red = (parameter: number) => {
   // Colors to interpolate between
   const COLORS = {
-    green: { r: 0, g: 132, b: 80 } /* Pastel Green */ as RGBColor,
+    green: { r: 0, g: 255, b: 80 } /* Pastel Green */ as RGBColor,
     yellow: { r: 239, g: 183, b: 0 } /* Yellow */ as RGBColor,
-    red: { r: 84, g: 29, b: 19 } /* Red */ as RGBColor,
+    red: { r: 255, g: 0, b: 19 } /* Red */ as RGBColor,
   }
 
   let rgbColor = null

@@ -99,7 +99,7 @@ function Chart({
   stats: { max: number; total: number }
 }) {
   return (
-    <div className='flex flex-col justify-between rounded-xl bg-black/90 p-2 backdrop-blur-md'>
+    <div className='glass flex flex-col justify-between rounded-xl bg-black/15 p-2 py-3 backdrop-blur-md'>
       {groups.map((value, index) => {
         // Get the maximum expense, and set the bars according to it
 
@@ -156,7 +156,7 @@ function Bar({
           'absolute top-0 -translate-y-1/2',
           'rounded-full border border-black/40',
           'px-2',
-          `bg-black/40 text-white/80 backdrop-blur-md`,
+          `bg-black/70 text-white/80 backdrop-blur-md`,
           'font-light',
         )}
       >

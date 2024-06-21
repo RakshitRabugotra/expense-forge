@@ -99,6 +99,8 @@ export default function DoughnutChart({
     [categorizedExp.current],
   )
 
+  console.log({ EXPENSE_DATA })
+
   return (
     <>
       <SubHeading>
@@ -204,7 +206,9 @@ function PieChartLegends({
       })
     }
     return tempMap
-  }, [keys, datasets])
+  }, [keys, datasets, total])
+
+  console.log({ colorMap })
 
   return (
     <div className='flex w-full flex-col items-center justify-center px-8 pb-4'>

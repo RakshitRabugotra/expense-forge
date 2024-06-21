@@ -59,7 +59,6 @@ function DailyTotalGauge({ dailyLimit }: { dailyLimit: number | null }) {
     () => (dailyLimit ? dailyTotal / dailyLimit : 0),
     [dailyTotal, dailyLimit],
   )
-  console.log({ dailyTotal2LimitRatio })
 
   // Fetch the expenses today
   useEffect(() => {
@@ -91,8 +90,6 @@ function MonthlyTotalGauge({ monthlyLimit }: { monthlyLimit: number | null }) {
     () => (monthlyLimit ? monthlyTotal / monthlyLimit : 0),
     [monthlyTotal, monthlyLimit],
   )
-
-  console.log({ monthlyTotal2LimitRatio })
 
   // Fetch the expenses today
   useEffect(() => {

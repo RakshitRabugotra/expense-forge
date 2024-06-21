@@ -30,7 +30,7 @@ export const getPieChartData = (
       datasets: [
         {
           data: [100],
-          backgroundColor: generateColors(1),
+          backgroundColor: generateColors(0),
         },
       ],
     } as ExpensePieData
@@ -48,7 +48,7 @@ export const getPieChartData = (
           : [100],
         backgroundColor:
           categorizedExpenses.length === 0
-            ? generateColors(1)
+            ? generateColors(0)
             : generateColors(categorizedExpenses.length),
       },
     ],

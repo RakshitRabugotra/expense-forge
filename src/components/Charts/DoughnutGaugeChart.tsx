@@ -14,7 +14,7 @@ import type { ExpensePieData } from '@/utils/functions/chart'
 import type { HTMLElementProps } from '@/types/page-component'
 
 // Custom utilities
-import { lconv } from '@/utils/functions/math'
+import { clamp, lconv } from '@/utils/functions/math'
 import { interpolateGreen2Red } from '@/utils/functions/chroma'
 
 ChartJS.register(ArcElement, Tooltip)
@@ -54,11 +54,11 @@ export default function DoughnutGaugeChart({
             data: [
               20,
               Math.round(
-                100 * lconv(ratio, { min: 0, max: 1 }, { min: 0, max: 0.8 }),
+                100 * clamp(lconv(ratio, { min: 0, max: 1 }, { min: 0, max: 0.8 }), 0, 0.8),
               ),
               Math.round(
                 100 *
-                  lconv(1 - ratio, { min: 0, max: 1 }, { min: 0, max: 0.8 }),
+                  clamp(lconv(1 - ratio, { min: 0, max: 1 }, { min: 0, max: 0.8 }), 0, 0.8),
               ),
               20,
             ],
@@ -73,6 +73,8 @@ export default function DoughnutGaugeChart({
       }) as ExpensePieData,
     [ratio],
   )
+
+  console.log({ EXPENSE_DATA })
 
   return (
     <section

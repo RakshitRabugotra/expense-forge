@@ -1,5 +1,6 @@
 /* Utility functions related to colors */
 import Color from 'color'
+import { clamp } from './math'
 
 const BASE_COLORS = [
   '#fe2e55' /* Red */,
@@ -71,6 +72,9 @@ export const interpolateGreen2Red = (parameter: number) => {
     yellow: { r: 239, g: 183, b: 0 } /* Yellow */ as RGBColor,
     red: { r: 255, g: 0, b: 19 } /* Red */ as RGBColor,
   }
+
+  // Clamp the parameter between [0, 1]
+  parameter = clamp(parameter, 0, 1)
 
   let rgbColor = null
   // If the parameter is less than 0.5, interpolate between green and yellow

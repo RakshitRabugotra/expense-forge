@@ -54,11 +54,20 @@ export default function DoughnutGaugeChart({
             data: [
               20,
               Math.round(
-                100 * clamp(lconv(ratio, { min: 0, max: 1 }, { min: 0, max: 0.8 }), 0, 0.8),
+                100 *
+                  clamp(
+                    lconv(ratio, { min: 0, max: 1 }, { min: 0, max: 0.8 }),
+                    0,
+                    0.8,
+                  ),
               ),
               Math.round(
                 100 *
-                  clamp(lconv(1 - ratio, { min: 0, max: 1 }, { min: 0, max: 0.8 }), 0, 0.8),
+                  clamp(
+                    lconv(1 - ratio, { min: 0, max: 1 }, { min: 0, max: 0.8 }),
+                    0,
+                    0.8,
+                  ),
               ),
               20,
             ],
@@ -73,8 +82,6 @@ export default function DoughnutGaugeChart({
       }) as ExpensePieData,
     [ratio],
   )
-
-  console.log({ EXPENSE_DATA })
 
   return (
     <section

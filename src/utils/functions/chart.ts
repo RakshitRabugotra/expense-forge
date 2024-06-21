@@ -5,7 +5,7 @@ import { CategorizedExpenses } from './expenses'
 import { generateColors } from './chroma'
 
 // Type definition for the data type in expense pie chart
-export type ExpensePieData = {
+export interface ExpensePieData {
   labels: string[]
   datasets: [
     {
@@ -53,4 +53,58 @@ export const getPieChartData = (
       },
     ],
   } as ExpensePieData
+}
+
+// Type definition for LineChart
+export interface LineChartData {
+  labels: string[]
+  datasets: [
+    {
+      data: number[]
+      label: string
+      backgroundColor: string
+      borderColor: string
+      fill: boolean
+    },
+  ]
+}
+
+export const getLineChartData = (
+  categorizedDateExpenses: CategorizedExpenses[] | null,
+) => {
+  const color = '#0f0'
+
+  // If the categorized expenses are null, the show no data found
+  if (!categorizedDateExpenses || categorizedDateExpenses.length === 0) {
+    return {
+      labels: ['No Expense'],
+      datasets: [
+        {
+          data: [100],
+          label: 'Expenditure',
+          backgroundColor: color,
+          borderColor: color,
+          fill: false,
+        },
+      ],
+    } as LineChartData
+  }
+
+  // Else return the categorized expenses in pie chart data form
+  return {
+    labels: categorizedDateExpenses
+      ? categorizedDateExpenses.map((value) => value.category)
+      : ['No Expense'],
+    datasets: [
+      {
+        data: categorizedDateExpenses
+          ? categorizedDateExpenses.map((value) => value.total)
+          : [100],
+        label: 'Expenditure',
+        borderColor: color,
+        backgroundColor: color,
+        fill: true,
+      },
+    ],
+  } as LineChartData
 }

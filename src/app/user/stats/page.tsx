@@ -1,16 +1,16 @@
-
 // Internal Dependencies
+import Heading from '@/components/Heading'
 import BarChart from '@/components/Charts/BarChart'
 import DuoGaugeChart from '@/components/Charts/DuoGaugeChart'
-import Heading from '@/components/Heading'
+import ExpenseTimelineChart from '@/components/Charts/ExpenseTimelineChart'
 
-
-export default function StatsPage() {
+export default async function StatsPage() {
   return (
     <>
       <Heading text='Your' coloredText='Stats' />
-      <BarChart />
+      <ExpenseTimelineChart />
       <DuoGaugeChart />
+      <BarChart />
     </>
   )
 }

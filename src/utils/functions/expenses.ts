@@ -1,5 +1,6 @@
 import { Tables } from '@/types/supabase'
 import { groupBy, simpleReduce } from './array'
+import { getItemsBetweenDays } from './chrono'
 
 /* Util functions related to expenses */
 export type CategorizedExpenses = { category: string; total: number }
@@ -38,4 +39,56 @@ export const reduceCategorizedExpenses = (
     } as CategorizedExpenses)
   })
   return exp
+}
+
+/**
+ * The valid timelines for the expense categorization by date
+ */
+export type Timeline =
+  | '7-days'
+  | '10-days'
+  | '15-days'
+  | '30-days'
+  | '2-months'
+  | '3-months'
+  | '6-months'
+  | '1-year'
+
+export const TIMELINES: Timeline[] = [
+  '7-days',
+  '10-days',
+  '15-days',
+  '30-days',
+  '2-months',
+  '3-months',
+  '6-months',
+  '1-year',
+]
+
+export const getTimelineExpenses = (
+  expenses: Tables<'expenses'>[],
+  timeline: Timeline,
+) => {
+  let exp = []
+
+  // Sort theses expenses in given time-periods
+  switch (timeline) {
+    case '7-days':
+      return getItemsBetweenDays(expenses, 7, (i) => i.expense_date)
+    case '10-days':
+      return getItemsBetweenDays(expenses, 10, (i) => i.expense_date)
+    case '15-days':
+      return getItemsBetweenDays(expenses, 15, (i) => i.expense_date)
+    case '30-days':
+      return getItemsBetweenDays(expenses, 30, (i) => i.expense_date)
+
+    case '2-months':
+      return
+    case '3-months':
+      return
+    case '6-months':
+      return
+    case '1-year':
+      return
+  }
 }

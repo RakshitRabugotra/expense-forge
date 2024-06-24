@@ -67,7 +67,7 @@ export default function BarChart() {
   )
 
   return (
-    <div className='my-6 flex w-full flex-col gap-2'>
+    <div className='my-6 flex w-full flex-col gap-2 select-none'>
       <SubHeading className='text-base'>
         {'Let us break it down for you!'}
       </SubHeading>

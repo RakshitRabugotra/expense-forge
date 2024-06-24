@@ -17,6 +17,7 @@ export default function Heading({
       className={twMerge(
         className,
         'text-leaf-950 w-full text-left text-5xl font-medium',
+        'select-none'
       )}
     >
       {text}

@@ -30,7 +30,7 @@ export default function DuoGaugeChart() {
   }, [])
 
   return (
-    <div className='w-full'>
+    <div className='w-full select-none'>
       <SubHeading className='text-base'>{'These are your limits!'}</SubHeading>
       <section id='expense-gauge' className='flex w-full flex-row gap-6'>
         <DailyTotalGauge

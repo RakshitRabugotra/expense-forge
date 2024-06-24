@@ -12,10 +12,10 @@ export default function SubHeading({
   return (
     <h2
       className={twMerge(
-        'my-2 w-full px-2',
+        'my-2 w-full',
         'text-xl font-medium',
         'rounded-md',
-        !noBorder ? 'border-l-8 border-leaf-300' : '',
+        !noBorder ? 'border-l-8 border-leaf-300 px-2' : '',
         className,
       )}
       {...props}

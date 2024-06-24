@@ -72,7 +72,8 @@ export interface LineChartData {
 export const getLineChartData = (
   categorizedDateExpenses: CategorizedExpenses[] | null,
 ) => {
-  const color = '#0f0'
+  const borderColor = '#81c995'
+  const backgroundColor = '#81c995dd'
 
   // If the categorized expenses are null, the show no data found
   if (!categorizedDateExpenses || categorizedDateExpenses.length === 0) {
@@ -82,8 +83,8 @@ export const getLineChartData = (
         {
           data: [100],
           label: 'Expenditure',
-          backgroundColor: color,
-          borderColor: color,
+          backgroundColor,
+          borderColor,
           fill: false,
         },
       ],
@@ -101,8 +102,8 @@ export const getLineChartData = (
           ? categorizedDateExpenses.map((value) => value.total)
           : [100],
         label: 'Expenditure',
-        borderColor: color,
-        backgroundColor: color,
+        borderColor,
+        backgroundColor,
         fill: true,
       },
     ],

@@ -1,17 +1,20 @@
 'use client'
 
-import { getCategorizedExpenses } from '@/actions/stats'
 import { useEffect, useMemo, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
+// Custom Utilities
+import { TIMELINES, getTimelineExpenses } from '@/utils/functions/expenses'
 
 // Type definitions
-import {
-  TIMELINES,
-  getTimelineExpenses,
-  type Timeline,
-} from '@/utils/functions/expenses'
-import { Tables } from '@/types/supabase'
+import { type Timeline } from '@/utils/functions/expenses'
+import type { Tables } from '@/types/supabase'
+
+// Custom Actions
 import { getExpenses } from '@/actions/expenses'
-import { twMerge } from 'tailwind-merge'
+
+// Internal Dependencies
+import LineChart from './LineChart'
+import SubHeading from '../SubHeading'
 
 // Type Aliasing
 type Expense = Tables<'expenses'>
@@ -31,18 +34,58 @@ export default function ExpenseTimelineChart() {
     [timeline, allExpenses],
   )
 
-  console.log({ groupedExpenses })
+  return (
+    <section className='mt-4'>
+      <SubHeading className='text-base'>{'See your timeline!'}</SubHeading>
+      <div
+        className={twMerge(
+          'glass my-4 w-full bg-black/10',
+          'flex flex-col items-center justify-center',
+        )}
+      >
+        <LineChart
+          dateCategorizedExpenses={groupedExpenses}
+          className='my-4 px-2'
+        />
+        <LineChartTabs timeline={timeline} setTimeline={setTimeline} />
+      </div>
+    </section>
+  )
+}
+
+function LineChartTabs({
+  timeline,
+  setTimeline,
+}: {
+  timeline: Timeline
+  setTimeline: React.Dispatch<React.SetStateAction<Timeline>>
+}) {
+  const style = [
+    'rounded-full border-2',
+    'px-3 py-1',
+    'transition-colors duration-300',
+  ]
+  const activeStyle = 'border-leaf-300 bg-leaf-300 font-medium text-white'
+  const inactiveStyle = 'border-black/50'
 
   return (
-    <div>
+    <div
+      className={twMerge(
+        'inline-flex w-[75%] flex-wrap items-center justify-around gap-2',
+        'mb-4',
+      )}
+    >
       {TIMELINES.map((tl, index) => (
-        <div
+        <button
           onClick={() => setTimeline(tl)}
           key={index}
-          className={twMerge(timeline === tl ? 'bg-leaf-300' : '')}
+          className={twMerge(
+            ...style,
+            timeline === tl ? activeStyle : inactiveStyle,
+          )}
         >
           {tl}
-        </div>
+        </button>
       ))}
     </div>
   )

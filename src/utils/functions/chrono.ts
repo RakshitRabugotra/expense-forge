@@ -1,5 +1,4 @@
 /* Util function related to time */
-
 import moment from 'moment'
 
 /**
@@ -15,6 +14,9 @@ export const daysInCurrentMonth = () => {
  */
 export const daysLeftInThisMonth = () =>
   daysInCurrentMonth() - new Date().getDate()
+
+// Expenses grouped by date
+export type DateGroup<T> = { [date: string]: T[] }
 
 /**
  * Gives the items between a time-frame of days from now
@@ -35,9 +37,7 @@ export function getItemsBetweenDays<T>(
   const lastUTC = last.valueOf()
 
   // This will hold the dates between the given time-period
-  const DAYS: {
-    [key: string]: T[]
-  } = {}
+  const DAYS: DateGroup<T> = {}
 
   // Fill the empty date slots
   for (let i = days; i >= 0; i--) {

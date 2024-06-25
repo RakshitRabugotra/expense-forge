@@ -8,9 +8,11 @@ export default async function StatsPage() {
   return (
     <>
       <Heading text='Your' coloredText='Stats' />
-      <ExpenseTimelineChart />
-      <DuoGaugeChart />
-      <BarChart />
+      <div className='grid w-full grid-cols-1 md:grid-cols-2 md:gap-4'>
+        <ExpenseTimelineChart />
+        <BarChart />
+        <DuoGaugeChart />
+      </div>
     </>
   )
 }

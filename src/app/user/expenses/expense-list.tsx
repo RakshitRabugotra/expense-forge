@@ -20,6 +20,7 @@ import {
   reduceToGroupedEntries,
   sortByDate,
 } from '@/utils/functions/array'
+import { twMerge } from 'tailwind-merge'
 
 type Expense = Tables<'expenses'>
 
@@ -69,7 +70,12 @@ export default function ExpenseList() {
 
   return (
     <>
-      <div className='auto-rows-[minmax(fit-content, auto)] my-4 grid w-full grid-cols-1 gap-6'>
+      <div
+        className={twMerge(
+          'auto-rows-[minmax(fit-content, auto)] my-4 grid w-full grid-cols-1 gap-6',
+          'max-w-screen-md',
+        )}
+      >
         {dateGroups.current &&
           dateGroups.current.map(({ groupKey, entries }, index) => (
             <ExpenseDateGroup

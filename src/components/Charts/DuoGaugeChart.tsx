@@ -15,6 +15,7 @@ import { reduceExpenses } from '@/utils/functions/expenses'
 // Type definitions
 import type { Tables } from '@/types/supabase'
 import DoughnutGaugeChart from './DoughnutGaugeChart'
+import { twMerge } from 'tailwind-merge'
 
 // Alias for the type
 type Expense = Tables<'expenses'>
@@ -30,9 +31,14 @@ export default function DuoGaugeChart() {
   }, [])
 
   return (
-    <div className='w-full select-none'>
+    <div
+      className={twMerge(
+        'w-full select-none',
+        'flex flex-col items-center justify-between',
+      )}
+    >
       <SubHeading className='text-base'>{'These are your limits!'}</SubHeading>
-      <section id='expense-gauge' className='flex w-full flex-row gap-6'>
+      <section id='expense-gauge' className='my-4 flex w-full flex-row gap-6'>
         <DailyTotalGauge
           dailyLimit={preferences ? preferences.daily_limit : null}
         />
@@ -116,7 +122,7 @@ function Gauge({
   text: string
 }) {
   return (
-    <div className='glass my-2 w-[30%] basis-1/2 rounded-xl bg-black/15'>
+    <div className='glass w-[30%] basis-1/2 rounded-xl bg-black/15'>
       <DoughnutGaugeChart
         {...props}
         isPending={false}

@@ -35,11 +35,11 @@ export default function ExpenseTimelineChart() {
   )
 
   return (
-    <section className='mt-4 select-none'>
+    <section className={twMerge('mt-4 w-full select-none')}>
       <SubHeading className='text-base'>{'See your timeline!'}</SubHeading>
       <div
         className={twMerge(
-          'glass my-4 w-full bg-black/10',
+          'glass my-4 w-full rounded-xl bg-black/10',
           'flex flex-col items-center justify-center',
         )}
       >

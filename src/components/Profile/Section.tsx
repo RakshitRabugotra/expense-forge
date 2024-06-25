@@ -16,6 +16,7 @@ export default function Section({
   return (
     <section
       className={twMerge(
+        'max-w-screen-md',
         'my-6 w-full py-3',
         border ? 'border-y-2' : '',
         className,

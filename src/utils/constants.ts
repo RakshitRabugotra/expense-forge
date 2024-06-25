@@ -41,4 +41,5 @@ export const PERSONALIZATION_FIELDS_INPUTS: Record<
   daily_limit: null,
   user_id: null,
   updated_at: null,
+  avatar: null,
 }

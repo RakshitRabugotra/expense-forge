@@ -57,7 +57,7 @@ export default function Dashboard({ id, className }: HTMLElementProps) {
         className,
       )}
     >
-      <div className='flex w-full flex-row items-center justify-between'>
+      <div className='flex w-full flex-row items-center justify-center gap-4'>
         <button
           onClick={() => setIsDaily(true)}
           className={twMerge(
@@ -137,14 +137,25 @@ function ExpenseField({ title, figure, onClick }: ExpenseFieldProps) {
         'flex grow basis-1/2 flex-col',
         'select-none text-white',
         'p-2 px-4',
+        'md:my-auto',
         onClick ? 'cursor-pointer' : '',
       )}
       onClick={onClick}
     >
-      <p className='break-words text-base font-medium capitalize text-white/70'>
+      <p
+        className={twMerge(
+          'break-words text-base font-medium capitalize text-white/70',
+          'md:text-3xl md:font-light',
+        )}
+      >
         {title}
       </p>
-      <animated.h2 className='max-w-full break-words text-3xl font-bold leading-snug'>
+      <animated.h2
+        className={twMerge(
+          'max-w-full break-words text-3xl font-bold leading-snug',
+          'md:my-4 md:text-5xl md:font-extrabold',
+        )}
+      >
         {number.to((n) => compressToUnits(n, currencyFormatterINR, 1))}
       </animated.h2>
     </div>

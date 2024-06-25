@@ -67,7 +67,12 @@ export default function BarChart() {
   )
 
   return (
-    <div className='my-6 flex w-full flex-col gap-2 select-none'>
+    <div
+      className={twMerge(
+        'my-4 flex w-full select-none flex-col gap-2',
+        'md:row-span-2 md:w-full',
+      )}
+    >
       <SubHeading className='text-base'>
         {'Let us break it down for you!'}
       </SubHeading>

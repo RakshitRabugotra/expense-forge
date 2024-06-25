@@ -36,14 +36,16 @@ export default async function IndexPage() {
         coloredText={(user_metadata?.firstName ?? '') + '!'}
         className='mb-10'
       />
-      {/* Show the dashboard */}
-      <Dashboard className='mb-10' />
-      {/* The Doughnut Chart for analytics */}
-      <DoughnutChart
-        dailyLimit={userPreference.daily_limit}
-        className='mb-10'
-      />
-      <Recent />
+      <div className='grid grid-cols-1 md:grid-cols-2 md:gap-4'>
+        {/* Show the dashboard */}
+        <Dashboard className='mb-10' />
+        {/* The Doughnut Chart for analytics */}
+        <DoughnutChart
+          dailyLimit={userPreference.daily_limit}
+          className='mb-10'
+        />
+        <Recent />
+      </div>
     </>
   )
 }

@@ -100,7 +100,7 @@ export default function DoughnutChart({
   )
 
   return (
-    <>
+    <section className='md:row-span-2'>
       <SubHeading>
         Today's Expenses{' '}
         <Link
@@ -134,7 +134,7 @@ export default function DoughnutChart({
           expenseData={EXPENSE_DATA}
         />
       </article>
-    </>
+    </section>
   )
 }
 
@@ -162,7 +162,7 @@ function ChartStats({
     <animated.div
       className={twMerge(
         'absolute left-0 right-0 top-1/2 -translate-y-1/2',
-        'mx-auto aspect-square min-w-0 max-w-[60%] rounded-full',
+        'mx-auto aspect-square min-w-0 max-w-[60%] rounded-full md:max-w-[288px]',
         'bg-foreground',
         'text-center text-base font-medium text-leaf-200',
         'flex flex-col items-center justify-center gap-2',

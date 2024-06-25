@@ -44,8 +44,6 @@ async function GetStarted() {
     error,
   } = await getUser()
 
-  console.log({ user })
-
   // Flag for checking if the user session is valid or not
   const isValid = !error && user !== null
 

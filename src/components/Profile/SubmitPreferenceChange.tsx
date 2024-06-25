@@ -2,15 +2,17 @@
 
 import { useFormStatus } from 'react-dom'
 
-export function SubmitMonthlyLimitChange() {
+// Custom actions
+import { recordUserPersonalizations } from '@/actions/user-personalization'
+
+// Type definitions
+import { HTMLElementProps } from '@/types/page-component'
+
+export function SubmitMonthlyLimitChange(props: HTMLElementProps) {
   const { pending } = useFormStatus()
 
-  const handleSubmit = (formData: FormData) => {
-    console.log(formData.get('monthly-limit'))
-  }
-
   return (
-    <button type='submit' formAction={handleSubmit}>
+    <button type='submit' formAction={recordUserPersonalizations} {...props}>
       {pending ? 'Recording' : 'Save'}
     </button>
   )

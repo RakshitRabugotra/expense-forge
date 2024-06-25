@@ -164,3 +164,39 @@ export const updateDailyLimit = async (monthlyLimit: number) => {
 
   return data
 }
+
+/**
+ * Registers a given avatar to the user
+ * @param avatar The avatar html string (containing svg code)
+ * @returns The data on successful insertion, else null
+ */
+export const recordAvatar = async (avatar: string) => {
+  // Create a supabase client
+  const supabase = await createClient()
+
+  // Get the current logged-in user
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    console.log('ERROR: Cannot update avatar for a null user')
+    return null
+  }
+
+  // Make the query for updating
+  const { data, error } = await supabase
+    .from('user_personalization')
+    .update({
+      avatar,
+    })
+    .eq('user_id', user.id)
+    .select()
+
+  if (error) {
+    console.log("ERROR: Couldn't update the avatar for user", error)
+    return null
+  }
+
+  return data
+}

@@ -1,5 +1,6 @@
 // Custom Actions
 import { getUser } from '@/actions/auth'
+import { getUserPersonalizations } from '@/actions/user-personalization'
 
 // Internal Dependencies
 import Heading from '@/components/Heading'
@@ -10,6 +11,7 @@ import ModifyPreferences from '@/components/Profile/ModifyPreferences'
 
 // Type definitions
 import { User } from '@supabase/supabase-js'
+import { Tables } from '@/types/supabase'
 
 export default async function ProfilePage() {
   // Fetch the logged-in user
@@ -22,6 +24,14 @@ export default async function ProfilePage() {
     return
   }
 
+  // The personalizations of the user
+  const personalizations = await getUserPersonalizations()
+
+  if (!personalizations) {
+    console.error('ERROR: Cannot fetch personalizations for the user')
+    return
+  }
+
   // Metadata of the user
   const {
     user_metadata: { firstName },
@@ -30,25 +40,39 @@ export default async function ProfilePage() {
   return (
     <>
       <Heading text={'Welcome'} coloredText={(firstName ?? '') as string} />
-      <AccountSection user={user} />
+      <AccountSection user={user} personalizations={personalizations} />
       <PreferenceSection user={user} />
-      <AuthButton />
+      <LogoutSection />
     </>
   )
 }
 
-function AccountSection({ user }: { user: User }) {
+function AccountSection({
+  user,
+  personalizations,
+}: {
+  user: User
+  personalizations: Tables<'user_personalization'>
+}) {
   return (
-    <Section title={'Account'} border>
-      <ModifyAccount user={user} />
+    <Section title='Account' border>
+      <ModifyAccount user={user} personalizations={personalizations} />
     </Section>
   )
 }
 
 function PreferenceSection({ user }: { user: User }) {
   return (
-    <Section title={'Preferences'} className='mt-0'>
+    <Section title='Preferences' className='mt-0'>
       <ModifyPreferences user={user} />
+    </Section>
+  )
+}
+
+function LogoutSection() {
+  return (
+    <Section title='' className='mt-0' border>
+      <AuthButton />
     </Section>
   )
 }

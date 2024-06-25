@@ -11,16 +11,19 @@ export type Database = {
     Tables: {
       category: {
         Row: {
+          icon_name: string | null
           id: string
           name: string
           user_id: string | null
         }
         Insert: {
+          icon_name?: string | null
           id?: string
           name: string
           user_id?: string | null
         }
         Update: {
+          icon_name?: string | null
           id?: string
           name?: string
           user_id?: string | null
@@ -38,6 +41,7 @@ export type Database = {
       expenses: {
         Row: {
           category: string
+          category_id: string | null
           created_at: string
           expenditure: number
           expense_date: string
@@ -47,6 +51,7 @@ export type Database = {
         }
         Insert: {
           category?: string
+          category_id?: string | null
           created_at?: string
           expenditure: number
           expense_date?: string
@@ -56,6 +61,7 @@ export type Database = {
         }
         Update: {
           category?: string
+          category_id?: string | null
           created_at?: string
           expenditure?: number
           expense_date?: string
@@ -64,6 +70,13 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "expenses_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "category"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "expenses_user_id_fkey"
             columns: ["user_id"]
@@ -75,21 +88,24 @@ export type Database = {
       }
       user_personalization: {
         Row: {
+          avatar: string | null
           daily_limit: number
           monthly_limit: number
-          updated_at: string
+          updated_at: string | null
           user_id: string
         }
         Insert: {
+          avatar?: string | null
           daily_limit?: number
           monthly_limit?: number
-          updated_at: string
+          updated_at?: string | null
           user_id?: string
         }
         Update: {
+          avatar?: string | null
           daily_limit?: number
           monthly_limit?: number
-          updated_at?: string
+          updated_at?: string | null
           user_id?: string
         }
         Relationships: [

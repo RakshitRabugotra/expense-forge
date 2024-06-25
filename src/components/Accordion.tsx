@@ -52,7 +52,8 @@ export function Content({
     <Accordion.Content
       className={twMerge(
         'accordion-content',
-        'w-full rounded-xl bg-leaf-300/30 shadow-md',
+        'rounded-md bg-black/5',
+        'w-full shadow-md',
         className,
       )}
       {...props}

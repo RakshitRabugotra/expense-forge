@@ -6,6 +6,9 @@ swe-worker-*
 # ignore todo files
 todo*
 
+# ignore helper scripts
+build-types.bash
+
 # dependencies
 /node_modules
 /.pnp

@@ -1,21 +1,40 @@
-import { generateUniqueAvatar } from '@/utils/dicebear/dicebear'
-import { User } from '@supabase/supabase-js'
 import parse from 'html-react-parser'
 import { twMerge } from 'tailwind-merge'
+
+// Internal Dependencies
 import UserEditButton from './UserEditButton'
 
-export default function ModifyAccount({ user }: { user: User }) {
+// Custom Utilities for avatar generation
+import { generateUniqueAvatar } from '@/utils/dicebear/dicebear'
+
+// Custom actions
+import { recordAvatar } from '@/actions/user-personalization'
+
+// Type definitions
+import { User } from '@supabase/supabase-js'
+import { Tables } from '@/types/supabase'
+
+export default async function ModifyAccount({
+  user,
+  personalizations,
+}: {
+  user: User
+  personalizations: Tables<'user_personalization'>
+}) {
   // User's metadata
-  let {
-    user_metadata: { firstName, lastName, avatar },
+  const {
+    user_metadata: { firstName, lastName },
   } = user
+
+  // User's avatar
+  let avatar = personalizations?.avatar ?? null
 
   // If the avatar is not defined, in user data
   if (!avatar) {
     // Generate a simple random avatar, and assign it to the user
-    console.log('avatar not found')
     avatar = generateUniqueAvatar().toString()
-    console.log({ avatar })
+    // Register this avatar
+    await recordAvatar(avatar)
   }
 
   return (

@@ -32,17 +32,17 @@ function MonthlyLimit({ defaultValue }: { defaultValue: number }) {
   return (
     <Accordion.Item value='set-monthly-limit'>
       <Accordion.Trigger title='Monthly Limit' />
-      <Accordion.Content>
+      <Accordion.Content className=''>
         <form className='my-3 p-3'>
           <input
-            id='monthly-limit'
-            name='monthly-limit'
+            id='monthly_limit'
+            name='monthly_limit'
             type='number'
             defaultValue={defaultValue}
             aria-label='Set monthly limit'
-            className='grow'
+            className='border-b-4 border-leaf-400 bg-transparent px-2 focus:outline-leaf-300'
           />
-          <SubmitMonthlyLimitChange />
+          <SubmitMonthlyLimitChange className='mx-2 w-[20%] rounded-md border-2 font-medium backdrop-blur-sm' />
         </form>
       </Accordion.Content>
     </Accordion.Item>

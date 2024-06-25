@@ -55,8 +55,8 @@ export default async function ModifyAccount({
         <h4 className='break-all text-sm'>{user.email}</h4>
       </div>
 
-      {/* The edit button */}
-      <UserEditButton />
+      {/* The edit button - to be implemented later on */}
+      {/* <UserEditButton user={user} /> */}
     </section>
   )
 }

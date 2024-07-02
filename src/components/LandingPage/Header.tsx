@@ -8,6 +8,7 @@ import InlineHeading from '@/components/InlineHeading'
 import { getUser } from '@/actions/auth'
 // Constant Dependencies
 import { PROTECTED_URL } from '@/utils/constants'
+import GetStarted from './GetStarted'
 
 export default function Header() {
   return (
@@ -38,26 +39,3 @@ export default function Header() {
   )
 }
 
-async function GetStarted() {
-  const {
-    data: { user },
-    error,
-  } = await getUser()
-
-  // Flag for checking if the user session is valid or not
-  const isValid = !error && user !== null
-
-  return (
-    <Link
-      href={isValid ? PROTECTED_URL : '/login'}
-      className={twMerge(
-        'self-end',
-        'px-4 py-2',
-        'rounded-full border',
-        'font-medium capitalize',
-      )}
-    >
-      Get Started
-    </Link>
-  )
-}

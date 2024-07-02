@@ -1,10 +1,6 @@
 'use server'
 
 import { Tables } from '@/types/supabase'
-import {
-  PERSONALIZATION_FIELDS_INPUTS,
-  PersonalizationFields,
-} from '@/utils/constants'
 import { daysLeftInThisMonth } from '@/utils/functions/chrono'
 import { createClient } from '@/utils/supabase/server'
 import moment from 'moment'
@@ -121,6 +117,8 @@ export const updateDailyLimit = async (monthlyLimit: number) => {
   if (!expenditureThisMonth) {
     monthTotalNow = 0
   } else {
+    // If the length is zero, then return empty result
+    if (expenditureThisMonth.length === 0) return 0
     // Get the total expenditure this month
     monthTotalNow = simpleReduce(
       expenditureThisMonth,

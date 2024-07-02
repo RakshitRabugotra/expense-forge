@@ -46,8 +46,6 @@ export function simpleReduce<T>(
   field: keyof T,
   operation: (prev: T[keyof T], curr: T[keyof T]) => T[keyof T],
 ) {
-  if (list.length === 0) return []
-
   return list.reduce((previous, current) => {
     const obj = { ...previous }
     obj[field] = operation(previous[field], current[field])

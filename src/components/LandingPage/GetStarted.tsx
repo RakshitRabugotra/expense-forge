@@ -22,9 +22,10 @@ export default async function GetStarted() {
       className={twMerge(
         'inline-block px-8 py-4',
         'text-xl font-bold text-white',
+        'bg-leaf-300',
         'rounded-md',
         'transition-colors duration-300',
-        'hover:bg-[#f40612]',
+        'hover:bg-leaf-400',
       )}
     >
       Get Started

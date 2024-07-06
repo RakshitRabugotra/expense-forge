@@ -32,9 +32,6 @@ export default function Header() {
         coloredText='Forge'
         className='w-fit text-4xl font-bold md:text-5xl'
       />
-
-      {/* Getting started button */}
-      <GetStarted />
     </div>
   )
 }

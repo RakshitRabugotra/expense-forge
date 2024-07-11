@@ -82,7 +82,7 @@ Contributions are welcome! If you have any ideas or improvements, feel free to o
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/RakshitRabugotra/expense-forge/LICENSE.md) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/RakshitRabugotra/expense-forge/blob/main/LICENSE) file for details.
 
 ## Acknowledgements
 

@@ -103,6 +103,7 @@ function AddExpense({ closeForm, setRefresh }: ModalChildProps) {
 
         <Input
           type='number'
+          min={0}
           name='expense-expenditure'
           placeholder='Expenditure'
           aria-label='expense expenditure field'

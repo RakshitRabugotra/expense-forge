@@ -138,6 +138,7 @@ function UpdateExpense({
 
         <Input
           type='number'
+          min={0}
           name='expense-expenditure'
           placeholder='Expenditure'
           defaultValue={expense?.expenditure.toString()}

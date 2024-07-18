@@ -1,7 +1,6 @@
 'use client'
 
 import { useMemo } from 'react'
-import { twMerge } from 'tailwind-merge'
 
 // Type definitions
 import { Tables } from '@/types/supabase'

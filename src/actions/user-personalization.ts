@@ -1,14 +1,10 @@
 'use server'
+import moment from 'moment'
 
-import { Tables } from '@/types/supabase'
 import { daysLeftInThisMonth } from '@/utils/functions/chrono'
 import { createClient } from '@/utils/supabase/server'
-import moment from 'moment'
-import { getExpenseThisMonth } from './stats'
 import { simpleReduce } from '@/utils/functions/array'
-
-// Alias for the type
-type Personalization = Tables<'expenses'>
+import { getExpenseThisMonth } from './stats'
 
 /**
  *

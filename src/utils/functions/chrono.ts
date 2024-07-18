@@ -2,6 +2,31 @@
 import moment from 'moment'
 
 /**
+ * Checks if the given date is wihin 1 month of today, but not today
+ * @param day The day to check
+ */
+export const checkWithinMonth = (day: Date) => {
+  // Get today's date
+  const today = new Date()
+  // Setting the last month's date
+  const firstMonthDay = new Date()
+  firstMonthDay.setDate(0)
+
+  // Convert to moment format
+  const mToday = moment(today).format('YYYY-MM-DD')
+  const mDay = moment(day).format('YYYY-MM-DD')
+  const mFirstMonthDay = moment(firstMonthDay).format('YYYY-MM-DD')
+
+  // If the date matches today, return false
+  if (mToday === mDay) return false
+  // If the date matches last-month's last date, yes!
+  if (mFirstMonthDay === mDay) return true
+
+  // Return if the given day falls within the range [firstMonthDay, today)
+  return firstMonthDay < day && day < today
+}
+
+/**
  * @returns Number of days in this month
  */
 export const daysInCurrentMonth = () => {

@@ -1,7 +1,10 @@
 'use server'
 
 import { Tables } from '@/types/supabase'
+import { checkWithinMonth } from '@/utils/functions/chrono'
 import { createClient } from '@/utils/supabase/server'
+import { updateDailyLimit } from './user-personalization'
+import { SupabaseClient } from '@supabase/supabase-js'
 
 /**
  *
@@ -16,7 +19,7 @@ export const getExpenses = async () => {
 
   // If we encounter some error
   if (error) {
-    console.log('ERROR: while fetching the expenses', error)
+    console.error('error while fetching the expenses', error)
     return null
   }
 
@@ -39,7 +42,7 @@ export const getRecentExpenses = async (limit: number) => {
     .limit(limit)
   // If we encounter some error
   if (error) {
-    console.log('ERROR: while fetching the recent expenses', error)
+    console.error('error while fetching the recent expenses', error)
     return null
   }
 
@@ -61,7 +64,7 @@ export const recordExpense = async (formData: FormData) => {
   const date = formData.get('expense-date') as string
   const expenditure = parseInt(formData.get('expense-expenditure') as string)
 
-  return await supabase.from('expenses').insert([
+  const { error } = await supabase.from('expenses').insert([
     {
       name,
       category,
@@ -69,6 +72,16 @@ export const recordExpense = async (formData: FormData) => {
       expenditure,
     } as Tables<'expenses'>,
   ])
+
+  if (error) {
+    console.error('error while recording the expense: ', { error })
+    return null
+  }
+
+  // Else, update the daily limit if we have to
+  // If the date of the expendtiure, doesn't match today isn't today, and is within this month
+  // then recalculate the daily limit
+  return handleDateMismatch(supabase, date)
 }
 
 /**
@@ -86,7 +99,7 @@ export const updateExpense = async (formData: FormData, id: string) => {
   const date = formData.get('expense-date') as string
   const expenditure = parseInt(formData.get('expense-expenditure') as string)
 
-  return await supabase
+  const { error } = await supabase
     .from('expenses')
     .update({
       name,
@@ -95,6 +108,13 @@ export const updateExpense = async (formData: FormData, id: string) => {
       expenditure,
     } as Tables<'expenses'>)
     .eq('id', id)
+
+  if (error) {
+    console.error('error while updating the expense: ', { error })
+    return null
+  }
+  // Else handle if the date falls in this month, update daily limiy
+  return handleDateMismatch(supabase, date)
 }
 
 /**
@@ -106,5 +126,58 @@ export const deleteExpense = async (id: string) => {
   // Create a supabase client
   const supabase = await createClient()
 
-  return await supabase.from('expenses').delete().eq('id', id)
+  const { data, error } = await supabase
+    .from('expenses')
+    .select('created_at')
+    .eq('id', id)
+    .single()
+
+  if (!data || error) {
+    console.error('error while fetching the expense to delete with id: ' + id, {
+      error,
+      data,
+    })
+    return null
+  }
+  // Delete the given expense
+  const { error: er } = await supabase.from('expenses').delete().eq('id', id)
+
+  if (er) {
+    console.error('error while deleting the expense: ', { error: er })
+    return null
+  }
+  // Extract the date
+  const { created_at: date } = data
+
+  // If the date of the expense, isn't today, and is within this month then
+  // update the daily limit
+  return handleDateMismatch(supabase, date)
+}
+
+/**
+ * Checks if the given expense date is out of range for a transaction (create, update, delete)
+ * @param supabase The supabase client to interact with Supabase
+ * @param date The date of the expense (created_at)
+ */
+const handleDateMismatch = async (supabase: SupabaseClient, date: string) => {
+  const isWithinMonth = checkWithinMonth(new Date(date))
+
+  // If it isn't the case, we don't need to do anything
+  if (!isWithinMonth) return null
+
+  // Else, get the user's monthly limit and update the daily limit accordingly
+  const { data, error } = await supabase
+    .from('user_personalization')
+    .select('monthly_limit')
+    .single()
+
+  if (!data || error) {
+    console.error('error while fetching the monthly limit of the user: ', {
+      data,
+      error,
+    })
+    return null
+  }
+  // Else, update the daily limit
+  return await updateDailyLimit(data.monthly_limit)
 }

@@ -41,63 +41,9 @@ export const getUserPersonalizations = async () => {
  */
 export const recordUserPersonalizations = async (formData: FormData) => {
   // The required fields
-  const monthly_limit = parseInt(formData.get('monthly_limit') as string)
-
-  // Create a supabase client
-  const supabase = await createClient()
-
-  // Get the user
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user) {
-    console.log("ERROR: Couldn't update the preference for null user")
-    return null
-  }
-
-  // Check if the record exits
-  const { error: rowFetchError } = await supabase
-    .from('user_personalization')
-    .select('*')
-    .eq('user_id', user.id)
-    .single()
-  // If the record doesn't exists, then send an insertion request
-  if (rowFetchError && rowFetchError.code === 'PGRST116') {
-    // This means the record doesn't exists, insert a new row
-    const { data, error } = await supabase.from('user_personalization').insert([
-      {
-        monthly_limit,
-        daily_limit: Math.floor(monthly_limit / daysLeftInThisMonth()),
-        updated_at: moment.utc().format('YYYY-MM-DD'),
-      },
-    ])
-
-    if (error) {
-      console.log("ERROR: Couldn't update the user preferences", error)
-      return null
-    }
-    return data
-  }
-
-  // Else send an insert query
-  const { data, error } = await supabase
-    .from('user_personalization')
-    // To get the daily-limit, we divide the monthly-limit by the days left in this month
-    // which gives the average expenditure for each day for this month
-    .update({
-      monthly_limit,
-      daily_limit: Math.floor(monthly_limit / daysLeftInThisMonth()),
-      updated_at: moment.utc().format('YYYY-MM-DD'),
-    })
-    .eq('user_id', user.id)
-    .select()
-
-  if (error) {
-    console.log("ERROR: Couldn't update the user preferences", error)
-    return null
-  }
-
+  const monthlyLimit = parseInt(formData.get('monthly_limit') as string)
+  // Update the monthly limit
+  const data = await updateDailyLimit(monthlyLimit)
   return data
 }
 
@@ -147,7 +93,7 @@ export const updateDailyLimit = async (monthlyLimit: number) => {
   // Make the query for updating
   const { data, error } = await supabase
     .from('user_personalization')
-    .update({ daily_limit, updated_at: moment.utc().format('YYYY-MM-DD') })
+    .upsert({ daily_limit, updated_at: moment.utc().format('YYYY-MM-DD') })
     .eq('user_id', user.id)
     .select()
 

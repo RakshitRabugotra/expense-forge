@@ -93,7 +93,11 @@ export const updateDailyLimit = async (monthlyLimit: number) => {
   // Make the query for updating
   const { data, error } = await supabase
     .from('user_personalization')
-    .upsert({ daily_limit, updated_at: moment.utc().format('YYYY-MM-DD') })
+    .upsert({
+      daily_limit,
+      monthly_limit: monthlyLimit,
+      updated_at: moment.utc().format('YYYY-MM-DD'),
+    })
     .eq('user_id', user.id)
     .select()
 
